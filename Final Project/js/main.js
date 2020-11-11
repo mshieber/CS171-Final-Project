@@ -38,10 +38,90 @@ Promise.all([
 
         // string -> JSON (only currently works for 'genre', others show error
         // uncomment bellow to view error
-        let colsToJSON = ['genres']//,'production_countries', 'production_companies', 'spoken_languages']
+
+        // GOT SPOKEN LANGUAGES TO WORK
+        //let colsToJSON = ['genres', 'spoken_languages', 'production_countries']
+        //let colsToJSON = ['production_companies']
+        let colsToJSON = ['genres','production_countries', 'spoken_languages']
         for (i in colsToJSON){
             let col = colsToJSON[i]
-            row[col] = JSON.parse(row[col].replace(/'/g, '"'))
+
+
+
+            // [^a-zA-Z\d\s"] <- ALL NON-ALPHANUM NON-SPACE NON-QUOTE
+            /*
+            if (row[col].match(/s/)) {
+                console.log(col)
+                console.log(row[col])
+            }
+
+             */
+
+            // Some JSON inputs are empty, which throws an "unexpected end of JSON" error. This fills in the values with something
+            if (row[col].length == 0) {
+                row[col] = "[{'NA': 'NA'}]"
+            }
+            //row[col] = JSON.parse(row[col])
+
+            // Function to remove quotes in a substring; was only useful for prod company
+            function quoteremove(match) {
+                match.replace(/'/g, '"')
+            }
+
+            row[col] = row[col].replace(/'/g, '"')
+                // Dealing with languages
+                .replace("\\x", "x")
+                // Dealing with countries
+                .replace("D\"Iv", "D\'Iv")
+                // Dealing with production companies
+                // This is so much to do by hand; possible to simplify?
+                .replace("e\"s", "e\'s")
+                .replace("d\"I", "d\'I")
+                .replace("D\"P", "D\'P")
+                .replace("D\"A", "D\'A")
+                /* EVERYTHING HERE AND BELOW IS DEALING WITH PRODUCTION COMPANIES
+                .replace("Workin\"", "Workin\'")
+                .replace("Po\" Boy", "Po\' Boy")
+                .replace("\"Tor\"", "Tor")
+                .replace("l\"A", "l\'A")
+                .replace("de l\"", "de l\'")
+                .replace("Sol\"", "Sol\'")
+                .replace("production d\"", "production d\'")
+                .replace("undefined", "\" undefined")
+                //.replace(/\"[0-9]/, quoteremove)
+                .replace("\"84", "\'84")
+                // Can't replace similarly to 84, because '98 MPH Pictures' also exists
+                .replace("Project \"98", "Project \'98")
+                // The next ones are brutal because the apostrophe is at the end, so they can't be easily replaced
+                .replace("Donners\"", "Donners\'")
+                .replace("Kids\" WB", "Kids\' WB")
+                .replace("Double \"A\"", "Double A")
+                // The next few are just dealing with zespol filmowy
+                .replace("\"\"", "")
+                //.replace(/Filmow[A-Za-z] \"[A-Za-z]*\"/, quoteremove)
+                .replace(/Filmow[a-z] [a-zA-Z\d\s"]*,/, "\",")
+                .replace("Zespól Filmowy \"X", "Zespól Filmowy X\"")
+                .replace(/Filmowy [\"]*Perspektywa/, "Filmowy Perspektywa\"")
+                .replace("Filmowy \"Kadr", "Filmowy Kadr\"")
+                .replace(/[a-zA-Z]\"[a-zA-Z]/, quoteremove)
+
+                 */
+
+
+            // Separated out the replacements and the parsing to make it easier to debug, but we can always combine
+            //console.log(row)
+            row[col] = JSON.parse(row[col])
+            /*row[col] = JSON.parse(row[col].replace(/'/g, '"')
+                .replace("\\x", "x")
+                .replace("D\"Iv", "D\'Iv")
+                .replace("e\"s", "e\'s"))
+
+             */
+
+            //console.log(row[col])
+
+
+
         }
         return row
     })]).then(function(data) {
