@@ -1,5 +1,7 @@
 // BARCHART CLASS FOR TOP TEN GROSSING
 
+// DATA SOURCE FOR THIS PART: https://www.kaggle.com/bidyutchanda/top-10-highest-grossing-films-19752018
+
 /* ISSUES TO FIX/THINGS TO DO:
 
 - long titles towards the left will clip
@@ -71,9 +73,6 @@ class GrossingVis {
         vis.wrangleData();
     }
 
-
-
-
     /*
      * Data wrangling
      */
@@ -83,6 +82,7 @@ class GrossingVis {
 
         vis.displayData = []
 
+        // Getting selected value
         vis.selected = document.getElementById('year-select').value
         //console.log(vis.selection)
         //vis.selected = "2008"
@@ -105,10 +105,6 @@ class GrossingVis {
 
 
 
-    /*
-     * The drawing function - should use the D3 update sequence (enter, update, exit)
-     */
-
     updateVis() {
         let vis = this;
 
@@ -119,7 +115,7 @@ class GrossingVis {
         vis.x.domain(vis.displayData.map(d => d.title))
         vis.y.domain([0, d3.max(vis.displayData, d=> d.worldwide_gross)])
 
-        // Update title
+        // Enter/update/exit for title
         vis.titleText = vis.svg.selectAll(".title-label")
             .data(vis.displayData)
 
@@ -156,27 +152,6 @@ class GrossingVis {
 
         vis.bars.exit().remove()
 
-        /*
-        // Adding labels
-        vis.labels = vis.svg.selectAll("text.title-label")
-            .data(vis.displayData, d=>d.value)
-
-        vis.labels.enter()
-            .append("text")
-            .attr("class", "title-label")
-            .text(d => d.title)
-            .attr("y", (d, i) => (i * (vis.height/vis.displayData.length)) + 20)
-            .attr("x", d => vis.x(d.title) + 10)
-            .attr("fill", "black")
-
-        vis.labels.exit().remove()
-
-         */
-
-        // * TO-DO *
-        // Filter data accordingly without changing the original data
-
-
         // Update the y-axis
         vis.svg.select(".x-axis").call(vis.xAxis)
             .selectAll("text")
@@ -191,10 +166,4 @@ class GrossingVis {
 
     }
 
-
-
-    /*
-     * Filter data when the user changes the selection
-     * Example for brushRegion: 07/16/2016 to 07/28/2016
-     */
 }
