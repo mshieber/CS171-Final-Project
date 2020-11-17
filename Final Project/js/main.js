@@ -35,6 +35,7 @@ Promise.all([
         row.adult = (row.adult == 'True')
         // string -> dateTime
         row.release_date = dateParser(row.release_date)
+        if (!row.release_date) {return;}
 
         // string -> JSON (only currently works for 'genre', others show error
         // uncomment bellow to view error
@@ -125,9 +126,10 @@ Promise.all([
         }
         return row
     })]).then(function(data) {
-        console.log('IMDB ratings: ', data[0])
-        console.log('Movies ratings: ', data[1])
-        combineData(data[0], data[1])
+        console.log('IMDB ratings: ', data[0]);
+        console.log('Movies ratings: ', data[1]);
+        combineData(data[0], data[1]);
+        createVis(data[1]);
     }).catch( function (err){console.log(err)} );
 
 // function to combine two data arrays to single data dict with imdb_id as the key
@@ -148,6 +150,11 @@ function combineData(imdbD, movieD) {
         }
     });
     // log first 10 elements of dataDict (too big to log all)
-    let keysHead = Object.keys(dataDict).slice(0,10)
+    let keysHead = Object.keys(dataDict).slice(1,10)
     keysHead.forEach(key => console.log(dataDict[key]))
+}
+
+function createVis(data){
+    let profitVis = new ProfitVis('profitVis', data)
+    let areaVis = new AreaVis('areaVis', data)
 }
