@@ -29,6 +29,18 @@
 			<div id="areaVis"></div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-10">
+			<div id="grossingVis"></div>
+		</div>
+		<div class="col-md-2">
+			<form>
+				<label for="year-select">Year (between 1975 and 2018 inclusive):</label>
+				<input type="number" id="year-select" name="year-select" value="2010" min="1975" max="2018">
+				<input type="submit" id="submit-button" value="Submit" onClick="updateGross();return false">
+			</form>
+		</div>
+	</div>
 
 
 
@@ -43,6 +55,7 @@
 
 	<script src="js/profitVis.js"></script>
 	<script src="js/areaVis.js"></script>
+	<script src="js/grossingVis.js"></script>
 
 	<!-- own js files -->
 	<script src="js/main.js"></script>

@@ -12,6 +12,11 @@ Promise.all(promises)
 let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
+// Vis objects
+let profitVis,
+    areaVis,
+    grossingVis;
+
 // load and manage IMDB data
 Promise.all([
     // import IMDB Data
@@ -125,11 +130,31 @@ Promise.all([
 
         }
         return row
+    }),
+    // import top ten grossing metadata
+    d3.csv("data/toptengrossing.csv", (row) => {
+
+        // Dealing with worldwide_gross, which has a dollar sign appended
+        row['worldwide_gross'] = row['worldwide_gross']
+            .replace("$", "")
+            .replace(/,/g, "")
+
+        // Converting certain values to numeric
+        let colsToInt = ['imdb_rating', 'length', 'rank_in_year', 'year', 'worldwide_gross']
+        for (i in colsToInt){
+            let col = colsToInt[i]
+            row[col] = +row[col]
+        }
+
+        row["Genres"] = [row['Main_Genre'], row['Genre_2'], row['Genre_3']]
+
+
+        return row
     })]).then(function(data) {
         console.log('IMDB ratings: ', data[0]);
         console.log('Movies ratings: ', data[1]);
         combineData(data[0], data[1]);
-        createVis(data[1]);
+        createVis(data[1], data[2]);
     }).catch( function (err){console.log(err)} );
 
 // function to combine two data arrays to single data dict with imdb_id as the key
@@ -154,7 +179,14 @@ function combineData(imdbD, movieD) {
     keysHead.forEach(key => console.log(dataDict[key]))
 }
 
-function createVis(data){
-    let profitVis = new ProfitVis('profitVis', data)
-    let areaVis = new AreaVis('areaVis', data)
+function createVis(data, topTenData){
+    profitVis = new ProfitVis('profitVis', data)
+    areaVis = new AreaVis('areaVis', data)
+    grossingVis = new GrossingVis('grossingVis', topTenData)
+}
+
+function updateGross(){
+
+    grossingVis.wrangleData()
+
 }
