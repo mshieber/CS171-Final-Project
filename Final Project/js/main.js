@@ -15,7 +15,8 @@ let dateParser = d3.timeParse("%Y-%m-%d");
 // Vis objects
 let profitVis,
     areaVis,
-    grossingVis;
+    grossingVis,
+    chordVis;
 
 // load and manage IMDB data
 Promise.all([
@@ -183,6 +184,7 @@ function createVis(data, topTenData){
     profitVis = new ProfitVis('profitVis', data)
     areaVis = new AreaVis('areaVis', data)
     grossingVis = new GrossingVis('grossingVis', topTenData)
+    chordVis = new ChordVis('chordVis', data)
 }
 
 function updateGross(){
