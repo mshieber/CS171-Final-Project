@@ -180,4 +180,17 @@ class ProfitVis {
             .attr('x', d => vis.x(d.genre)+5);
         labels.exit().remove();*/
     }
+
+    onSelectionChange (selectionStart, selectionEnd){
+        let vis = this;
+
+        console.log(selectionStart, selectionEnd)
+        // Filter data depending on selected time period (brush)
+        vis.filteredData = vis.data.filter(function(d){
+            return (selectionStart < d.release_date && d.release_date < selectionEnd)
+        });
+        console.log('brushed', vis.filteredData)
+
+        vis.wrangleData();
+    }
 }

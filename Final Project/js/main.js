@@ -183,6 +183,13 @@ function createVis(data, topTenData){
     profitVis = new ProfitVis('profitVis', data)
     areaVis = new AreaVis('areaVis', data)
     grossingVis = new GrossingVis('grossingVis', topTenData)
+
+    let eventHandler = {};
+
+    $(eventHandler).bind("selectionChanged", function(event, rangeStart, rangeEnd){
+        console.log(rangeStart, rangeEnd)
+        profitVis.onSelectionChange(rangeStart, rangeEnd);
+    });
 }
 
 function updateGross(){

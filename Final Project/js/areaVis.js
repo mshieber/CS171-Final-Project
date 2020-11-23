@@ -65,7 +65,7 @@ class AreaVis {
 
         // Append brush component here
         vis.svg.append("g")
-            .attr("class", "x brush")
+            .attr("class", "brush")
             .call(vis.brush)
             .selectAll("rect")
             .attr("y", -6)
@@ -148,6 +148,19 @@ class AreaVis {
             .attr("class", "area")
             .attr("d", vis.area)
             .attr('fill', 'steelblue')
+
+        // Call brush component here
+        vis.brush
+            .on("brush", function(event){
+                // User just selected a specific region
+                vis.currentBrushRegion = event.selection;
+                console.log(vis.currentBrushRegion)
+                vis.currentBrushRegion = vis.currentBrushRegion.map(vis.xScale.invert);
+                console.log(vis.currentBrushRegion)
+
+                // 3. Trigger the event 'selectionChanged' of our event handler
+                $(vis.eventHandler).trigger("selectionChanged", vis.currentBrushRegion);
+            });
 
         // Update the x-axis
         vis.svg.select(".area-x-axis").call(vis.xAxis);
