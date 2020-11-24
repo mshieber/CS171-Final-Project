@@ -1,9 +1,10 @@
 class AreaVis {
 
-    constructor(parentElement, data) {
+    constructor(parentElement, data, _eventHandler) {
         this.parentElement = parentElement;
         this.data = data;
-        this.displayData = this.data;
+        this.displayData = [];
+        this.eventHandler = _eventHandler;
 
         this.initVis();
 
@@ -30,9 +31,13 @@ class AreaVis {
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-        // Append path element for area
+        // Append path element for total area
         vis.svg.append("path")
             .attr('class', 'area-path')
+
+        // Append path element for selected area
+        vis.svg.append("path")
+            .attr('class', 'area-path-select')
 
         // Append group for x-axis
         vis.svg.append('g')
@@ -44,19 +49,27 @@ class AreaVis {
             .attr('class', 'axis area-y-axis');
 
         // Scales and axes
-        vis.xScale = d3.scaleTime()
+        vis.xScale = d3.scaleLinear()
             .range([0, vis.width])
 
         vis.yScale = d3.scaleLinear()
             .range([vis.height, 0])
 
+        vis.keyScale = d3.scaleBand()
+            .range([0, vis.width])
+
         vis.xAxis = d3.axisBottom()
+            .tickFormat(d3.format("d"))
 
         vis.yAxis = d3.axisLeft()
 
+        // define area function
         vis.area = d3.area()
             .curve(d3.curveCardinal)
             .y0(vis.height)
+
+        // Initialize with animation selected
+        vis.selectedGenre = 'Animation'
 
         // Initialize brush component
         vis.brush = d3.brushX()
@@ -86,32 +99,52 @@ class AreaVis {
         // (1) Group data by date and count survey results for each day
         // (2) Sort data by day
 
-        vis.sortedData = vis.displayData.sort(function (a,b) {
+        vis.sortedData = vis.data.sort(function (a,b) {
             b.release_date - a.release_date
         })
-        console.log("sorted", vis.sortedData)
+
         vis.dataYears = []
-        vis.displayData.forEach((d) => {
+        vis.sortedData.forEach((d) => {
             if (!vis.dataYears.includes(d.release_date.getFullYear())){
                 vis.dataYears.push(d.release_date.getFullYear())
             }
         })
-        console.log(vis.dataYears)
 
-        // prep data
-        let moviesCount = d3.rollup(vis.data,
-            leaves=> {
-                let sum = 0;
-                leaves.forEach(d => sum += d.revenue);
-                return sum;
-            },
-            d => +d.release_date.getFullYear());
-        let moviesCountArr = Array.from(moviesCount, ([key, value]) => ({key, value}));
-        console.log(moviesCountArr)
-        moviesCountArr.sort(function (a,b) {
-            return (a.key - b.key)})
+        vis.selectedData = vis.sortedData.filter(d => {
+            let valList = []
+            d.genres.forEach(obj => {
+                valList.push(obj.name)
+            })
+            return valList.includes(vis.selectedGenre)
+        })
+        console.log('selection Data', vis.selectedData)
 
-        vis.displayData = moviesCountArr
+        // sum revenue by year
+        vis.dataSets = [vis.data, vis.selectedData]
+        vis.moviesCountList = []
+
+        for (let i in vis.dataSets){
+            let moviesCount = d3.rollup(vis.dataSets[i],
+                leaves=> {
+                    let sum = 0;
+                    leaves.forEach(d => sum += d.revenue);
+                    return sum;
+                },
+                d => +d.release_date.getFullYear());
+            console.log(moviesCount)
+            let moviesCountArr = Array.from(moviesCount, ([key, value]) => ({key, value}));
+            moviesCountArr.sort(function (a,b) {
+                return (a.key - b.key)})
+
+            // remove last 3 years (not enough data in them)
+            if (i == 0) {moviesCountArr.splice(-3,3)}
+            else {moviesCountArr.pop()}
+
+            vis.moviesCountList.push(moviesCountArr)
+        }
+        console.log(vis.moviesCountList)
+
+        vis.displayData = vis.moviesCountList
 
         // Update the visualization
         vis.updateVis();
@@ -125,15 +158,14 @@ class AreaVis {
     updateVis() {
         let vis = this;
 
-        // * TO-DO *
         vis.xScale
-            .domain(d3.extent(vis.displayData, d => d.key));
+            .domain(d3.extent(vis.displayData[0], d => d.key));
 
         vis.yScale
-            .domain([0, d3.max(vis.displayData, d => d.value)]);
+            .domain([0, d3.max(vis.displayData[0], d => d.value)]);
 
         vis.xAxis
-            .scale(vis.xScale);
+            .scale(vis.xScale)
 
         vis.yAxis
             .scale(vis.yScale);
@@ -144,7 +176,14 @@ class AreaVis {
             .y1(d => vis.yScale(d.value))
 
         vis.svg.select(".area-path")
-            .datum(vis.displayData)
+            .datum(vis.displayData[0])
+            .attr("class", "area")
+            .attr("d", vis.area)
+            .attr('fill', 'steelblue')
+            .attr('opacity', .6)
+
+        vis.svg.select(".area-path-select")
+            .datum(vis.displayData[1])
             .attr("class", "area")
             .attr("d", vis.area)
             .attr('fill', 'steelblue')
@@ -154,9 +193,9 @@ class AreaVis {
             .on("brush", function(event){
                 // User just selected a specific region
                 vis.currentBrushRegion = event.selection;
-                console.log(vis.currentBrushRegion)
+                //console.log(vis.currentBrushRegion)
                 vis.currentBrushRegion = vis.currentBrushRegion.map(vis.xScale.invert);
-                console.log(vis.currentBrushRegion)
+                //console.log(vis.currentBrushRegion)
 
                 // 3. Trigger the event 'selectionChanged' of our event handler
                 $(vis.eventHandler).trigger("selectionChanged", vis.currentBrushRegion);

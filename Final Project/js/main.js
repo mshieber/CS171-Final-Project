@@ -181,20 +181,19 @@ function combineData(imdbD, movieD) {
 }
 
 function createVis(data, topTenData){
-    profitVis = new ProfitVis('profitVis', data)
-    areaVis = new AreaVis('areaVis', data)
-    grossingVis = new GrossingVis('grossingVis', topTenData)
-<<<<<<< HEAD
-
     let eventHandler = {};
 
-    $(eventHandler).bind("selectionChanged", function(event, rangeStart, rangeEnd){
-        console.log(rangeStart, rangeEnd)
-        profitVis.onSelectionChange(rangeStart, rangeEnd);
-    });
-=======
+    profitVis = new ProfitVis('profitVis', data)
+    areaVis = new AreaVis('areaVis', data, eventHandler)
+    grossingVis = new GrossingVis('grossingVis', topTenData)
     chordVis = new ChordVis('chordVis', data)
->>>>>>> b15f70835620b4e22ec981e0b90b4186fffd047a
+
+    $(eventHandler).bind("selectionChanged", function(event, rangeStart, rangeEnd){
+        profitVis.onSelectionChange(Math.round(rangeStart), Math.round(rangeEnd));
+    });
+    $(eventHandler).bind("focusChanged", function(event, genre){
+        areaVis.onFocusChange(genre)
+    })
 }
 
 function updateGross(){

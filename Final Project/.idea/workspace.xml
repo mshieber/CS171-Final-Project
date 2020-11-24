@@ -21,7 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7b7808a1-8b84-4b2c-a933-4c622e9716fc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/areaVis.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/areaVis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/chordVis.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/chordVis.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/profitVis.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/profitVis.js" afterDir="false" />
     </list>
@@ -62,7 +65,7 @@
       <updated>1605033484439</updated>
       <workItem from="1605033485482" duration="15201000" />
       <workItem from="1605132076420" duration="119000" />
-      <workItem from="1605132470797" duration="25640000" />
+      <workItem from="1605132470797" duration="44071000" />
     </task>
     <servers />
   </component>
@@ -90,9 +93,13 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="397" y="199" key="SettingsEditor/0.0.1792.1120@0.0.1792.1120" timestamp="1605568774097" />
-    <state x="694" y="481" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605552490835">
+    <state x="694" y="481" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606159030474">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="694" y="481" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1792.1120@0.0.1792.1120" timestamp="1605552490835" />
+    <state x="694" y="481" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1792.1120@0.0.1792.1120" timestamp="1606159030474" />
+    <state x="561" y="251" width="670" height="676" key="search.everywhere.popup" timestamp="1606223736475">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="561" y="251" width="670" height="676" key="search.everywhere.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1606223736475" />
   </component>
 </project>

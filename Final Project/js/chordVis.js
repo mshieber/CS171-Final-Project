@@ -155,7 +155,8 @@ class ChordVis {
                 .radius(vis.radius)
             )
             .style("fill", "#69b3a2")
-            .style("stroke", "black");
+            .style("stroke", "black")
+            .style("stroke-width", .5);
 
         // this group object use each group of the data.groups object
         vis.group = vis.svg
