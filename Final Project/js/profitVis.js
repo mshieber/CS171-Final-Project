@@ -1,9 +1,10 @@
 class ProfitVis {
 
 
-    constructor(_parentElement, _data) {
+    constructor(_parentElement, _data, _eventHandler) {
         this.parentElement = _parentElement;
         this.data = _data;
+        this.eventHandler = _eventHandler
         this.filteredData = this.data;
 
         this.initVis();
@@ -17,7 +18,7 @@ class ProfitVis {
     initVis() {
         let vis = this;
 
-        vis.margin = {top: 20, right: 20, bottom: 40, left: 100};
+        vis.margin = {top: 30, right: 20, bottom: 30, left: 100};
 
         vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
             vis.height = 500 - vis.margin.top - vis.margin.bottom;
@@ -29,6 +30,7 @@ class ProfitVis {
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
+        vis.colors = ['steelblue', 'IndianRed']
 
         // Scales and axes
         vis.x = d3.scaleBand()
@@ -49,25 +51,24 @@ class ProfitVis {
 
         vis.yAxis = d3.axisLeft();
 
-        vis.svg.append("g")
-            .attr("class", "x-axis axis");
-
-        vis.svg.append("g")
-            .attr("class", "y-axis axis");
-
         // Axis title
         vis.svg.append("text")
-            .attr("x", -100)
-            .attr("y", -8)
-            .text("Avg Profit per Movie");
+            .attr('class', 'axis-title')
+            .attr("x", 0)
+            .attr("y", -12)
+            .attr('text-anchor', 'middle')
+            .text("Avg PPM");
 
         vis.emptyDataText = vis.svg.append('text')
             .attr('class', 'profit-empty-text')
             .attr('x', vis.width/2)
             .attr('y', vis.height/2)
             .attr('text-anchor', 'middle')
-            .text('NO DATA TO DISPLAY')
+            .text("Sorry, we don't have data for this time range :(")
             .attr('opacity', 0)
+
+        // initialize with animation selected
+        vis.selectedBar = 'Movie'
 
         // (Filter, aggregate, modify data)
         vis.wrangleData();
@@ -161,11 +162,6 @@ class ProfitVis {
         vis.xAxis.scale(vis.x)
         vis.yAxis.scale(vis.yAxisScale)
 
-        /*vis.svg.append('line')
-            .attr('class', 'x-line')
-            .attr({ 'x1': 0, 'y1': vis.y(0),
-                    'x2': vis.width, 'y2': vis.y(0)})*/
-
         let barPadding = 6
         let barwidth = (vis.width/vis.filteredData.length)-barPadding
 
@@ -182,6 +178,33 @@ class ProfitVis {
             .attr('class', d => {
                 return d.genre + ' bar'
             })
+            .on('mouseover', function(event, d){
+                vis.selectedBar = d.genre
+                vis.svg.selectAll(".bar")
+                    .attr('opacity', .6)
+
+                d3.select(this)
+                    .attr('opacity', 1)
+
+                $(vis.eventHandler).trigger("focusChanged", vis.selectedBar);
+            })
+            .on('mouseout', function(event, d){
+                vis.selectedBar = 'Movie'
+                vis.svg.selectAll(".bar")
+                    .attr('opacity', 1)
+
+                $(vis.eventHandler).trigger("focusChanged", vis.selectedBar);
+            })
+            .on('click', function(event, d){
+                vis.selectedBar = d.genre
+                vis.svg.selectAll(".bar")
+                    .attr('opacity', .6)
+
+                d3.select(this)
+                    .attr('opacity', 1)
+
+                $(vis.eventHandler).trigger("focusChanged", vis.selectedBar);
+            })
             .merge(bars)
             .transition()
             .duration(600)
@@ -196,27 +219,17 @@ class ProfitVis {
                 else{return vis.yBarsNeg(d.ppm)}
             })
             .attr('fill', d => {
-                if (d.ppm > 0) {return 'steelblue'}
-                else {return 'IndianRed'}
+                if (d.ppm > 0) {return vis.colors[0]}
+                else {return vis.colors[1]}
             })
-            .attr('opacity', d => {
-                if (d.genre == 'Animation') {
-                    return 1
-                }
-                else {
-                    return .6
-                }
-            })
-            /*.on('mouseover', function(event, d){
-                console.log(d)
-                vis.svg.selectAll(".bar")
-                    .attr('opacity', .6)
-
-                d3.select(this)
-                    .attr('opacity', 1)
-            })*/
 
         bars.exit().remove();
+
+        vis.svg.append("g")
+            .attr("class", "x-axis axis");
+
+        vis.svg.append("g")
+            .attr("class", "y-axis axis");
 
         // Call axis function with the new domain
         vis.svg.select(".x-axis")
@@ -230,17 +243,24 @@ class ProfitVis {
             .duration(600)
             .call(vis.yAxis);
 
-        // Bar Chart Bar Label
-        /*let labels = vis.svg.selectAll('.bar-label').data(vis.filteredData);
-        labels.enter()
-            .append('text')
-            .attr('class', 'bar-label')
-            .merge(labels)
-            .transition()
-            .text(d => d.genre)
-            .attr('y', d => vis.yBarsPos(d.ppm)+(barwidth/2)+barPadding)
-            .attr('x', d => vis.x(d.genre)+5);
-        labels.exit().remove();*/
+        // Flip axis labels for negative bars
+        let xTicks = d3.selectAll('.x-axis .tick line')
+        let xText = d3.selectAll('.x-axis .tick text')
+        vis.filteredData.forEach((d, i) => {
+            console.log(d, i)
+            if (d.ppm < 0){
+                d3.select(xTicks.nodes()[i])
+                    .attr("transform", 'translate(0, -5)');
+                d3.select(xText.nodes()[i])
+                    .attr("transform", 'translate(0, -28)');
+            }
+            else{
+                d3.select(xTicks.nodes()[i])
+                    .attr("transform", 'translate(0, 0)');
+                d3.select(xText.nodes()[i])
+                    .attr("transform", 'translate(0, 0)');
+            }
+        })
     }
 
     onSelectionChange (selectionStart, selectionEnd){
@@ -248,7 +268,7 @@ class ProfitVis {
 
         // Filter data depending on selected time period (brush)
         vis.filteredData = vis.data.filter(function(d){
-            return (selectionStart < d.release_date.getFullYear() && d.release_date.getFullYear() < selectionEnd)
+            return (selectionStart <= d.release_date.getFullYear() && d.release_date.getFullYear() <= selectionEnd)
         });
 
         vis.wrangleData();

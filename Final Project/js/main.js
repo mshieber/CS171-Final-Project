@@ -14,6 +14,7 @@ let dateParser = d3.timeParse("%Y-%m-%d");
 
 // Vis objects
 let profitVis,
+    profitVisTooltip,
     areaVis,
     grossingVis,
     chordVis;
@@ -152,7 +153,6 @@ Promise.all([
 
         return row
     })]).then(function(data) {
-        console.log('IMDB ratings: ', data[0]);
         console.log('Movies ratings: ', data[1]);
         combineData(data[0], data[1]);
         createVis(data[1], data[2]);
@@ -176,23 +176,26 @@ function combineData(imdbD, movieD) {
         }
     });
     // log first 10 elements of dataDict (too big to log all)
-    let keysHead = Object.keys(dataDict).slice(1,10)
-    keysHead.forEach(key => console.log(dataDict[key]))
+    /*let keysHead = Object.keys(dataDict).slice(1,10)
+    keysHead.forEach(key => console.log(dataDict[key]))*/
 }
 
 function createVis(data, topTenData){
     let eventHandler = {};
 
-    profitVis = new ProfitVis('profitVis', data)
+    profitVis = new ProfitVis('profitVis', data, eventHandler)
+    profitVisTooltip = new ProfitVisTooltip('profitVisTooltip', data, eventHandler)
     areaVis = new AreaVis('areaVis', data, eventHandler)
     grossingVis = new GrossingVis('grossingVis', topTenData)
     chordVis = new ChordVis('chordVis', data)
 
     $(eventHandler).bind("selectionChanged", function(event, rangeStart, rangeEnd){
         profitVis.onSelectionChange(Math.round(rangeStart), Math.round(rangeEnd));
+        profitVisTooltip.onFilterChange(null, Math.round(rangeStart), Math.round(rangeEnd))
     });
     $(eventHandler).bind("focusChanged", function(event, genre){
         areaVis.onFocusChange(genre)
+        profitVisTooltip.onFilterChange(genre)
     })
 }
 

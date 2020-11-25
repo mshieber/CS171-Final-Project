@@ -21,6 +21,10 @@
 	<body style="padding: 5vh">
 
 	<div id="fullpage">
+		<div class="section frontpage cover-image" style="background-image: url('img/Animated-films-collage.jpg');">
+			<p class="title center">front page</p>
+			<p class="subtitle center">subtitle</p>
+		</div>
 		<div class="section">
 			<div class="row">
 				<div class="col-md-12">
@@ -29,9 +33,23 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-9">
 					<p> This graph will let you individually explore revenue over time. </p>
 					<div id="areaVis"></div>
+				</div>
+				<div id="profitVisTooltip" class="col-md-3">
+					<h6 class="center" id="data-title"></h6>
+					<table class="table table-striped">
+						<tr class="table-row"><td class="elem-td">Movie Title:</td><td id="original_title" class="table-data"></td></tr>
+						<tr><td class="elem-td">Mean Rating:</td><td id="mean_vote"></td></tr>
+						<tr class="table-row"><td class="elem-td">Release Date:</td><td id="release_date"></td></tr>
+						<!-- <tr class="table-row">
+							<td class="elem-td">Budget:</td><td id="budget"></td>
+							<td class="elem-td">Revenue:</td><td id="revenue"></td>
+						</tr> -->
+						<tr class="table-row"><td class="elem-td">Profit:</td><td id="ppm"></td></tr>
+						<tr class="table-row"><td class="elem-td">Homepage:</td><td id="homepage"></td></tr>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -83,6 +101,7 @@
 	<!-- own js files -->
 	<script src="js/profitVis.js"></script>
 	<script src="js/areaVis.js"></script>
+	<script src="js/profitVisTooltip.js"></script>
 	<script src="js/grossingVis.js"></script>
 	<script src="js/chordVis.js"></script>
 	<script src="js/main.js"></script>

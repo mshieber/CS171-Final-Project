@@ -1,10 +1,10 @@
 class AreaVis {
 
-    constructor(parentElement, data, _eventHandler) {
+    constructor(parentElement, data, eventHandler) {
         this.parentElement = parentElement;
         this.data = data;
         this.displayData = [];
-        this.eventHandler = _eventHandler;
+        this.eventHandler = eventHandler;
 
         this.initVis();
 
@@ -19,7 +19,7 @@ class AreaVis {
     initVis() {
         let vis = this;
 
-        vis.margin = {top: 40, right: 20, bottom: 40, left: 100};
+        vis.margin = {top: 40, right: 40, bottom: 40, left: 100};
 
         vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
         vis.height = 300 - vis.margin.top - vis.margin.bottom;
@@ -31,13 +31,20 @@ class AreaVis {
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-        // Append path element for total area
-        vis.svg.append("path")
-            .attr('class', 'area-path')
+        vis.colors = ['steelblue', 'IndianRed']
 
-        // Append path element for selected area
-        vis.svg.append("path")
-            .attr('class', 'area-path-select')
+        // init pathGroup
+        vis.pathGroup = vis.svg.append('g').attr('class','pathGroup');
+
+        // init path one (average)
+        vis.pathOne = vis.pathGroup
+            .append('path')
+            .attr("class", "pathOne");
+
+        // init path two (single state)
+        vis.pathTwo = vis.pathGroup
+            .append('path')
+            .attr("class", "pathTwo");
 
         // Append group for x-axis
         vis.svg.append('g')
@@ -46,7 +53,15 @@ class AreaVis {
 
         // Append group for y-axis
         vis.svg.append('g')
-            .attr('class', 'axis area-y-axis');
+            .attr('class', 'axis area-y-axis')
+
+        // Axis title
+        vis.svg.append("text")
+            .attr('class', 'axis-title')
+            .attr("x", 0)
+            .attr("y", -12)
+            .attr('text-anchor', 'middle')
+            .text("Total Revenue");
 
         // Scales and axes
         vis.xScale = d3.scaleLinear()
@@ -62,6 +77,7 @@ class AreaVis {
             .tickFormat(d3.format("d"))
 
         vis.yAxis = d3.axisLeft()
+            .ticks(8)
 
         // define area function
         vis.area = d3.area()
@@ -69,7 +85,7 @@ class AreaVis {
             .y0(vis.height)
 
         // Initialize with animation selected
-        vis.selectedGenre = 'Animation'
+        vis.selectedGenre = 'Movie'
 
         // Initialize brush component
         vis.brush = d3.brushX()
@@ -110,14 +126,18 @@ class AreaVis {
             }
         })
 
-        vis.selectedData = vis.sortedData.filter(d => {
-            let valList = []
-            d.genres.forEach(obj => {
-                valList.push(obj.name)
+        if (vis.selectedGenre == 'Movie'){
+            vis.selectedData = vis.sortedData
+        }
+        else{
+            vis.selectedData = vis.sortedData.filter(d => {
+                let valList = []
+                d.genres.forEach(obj => {
+                    valList.push(obj.name)
+                })
+                return valList.includes(vis.selectedGenre)
             })
-            return valList.includes(vis.selectedGenre)
-        })
-        console.log('selection Data', vis.selectedData)
+        }
 
         // sum revenue by year
         vis.dataSets = [vis.data, vis.selectedData]
@@ -131,18 +151,23 @@ class AreaVis {
                     return sum;
                 },
                 d => +d.release_date.getFullYear());
-            console.log(moviesCount)
+
             let moviesCountArr = Array.from(moviesCount, ([key, value]) => ({key, value}));
             moviesCountArr.sort(function (a,b) {
                 return (a.key - b.key)})
 
-            // remove last 3 years (not enough data in them)
-            if (i == 0) {moviesCountArr.splice(-3,3)}
-            else {moviesCountArr.pop()}
+            moviesCountArr = moviesCountArr.filter(d => d.key < 2017)
+            /* remove last 3 years (not enough data in them)
+            if (vis.selectedGenre !== 'Movie'){
+                if (i == 0) {moviesCountArr.splice(-3,3)}
+                else {moviesCountArr.pop()}
+            }
+            else{
+                moviesCountArr.splice(-3,3)
+            }*/
 
             vis.moviesCountList.push(moviesCountArr)
         }
-        console.log(vis.moviesCountList)
 
         vis.displayData = vis.moviesCountList
 
@@ -175,18 +200,21 @@ class AreaVis {
             .x(d => vis.xScale(d.key))
             .y1(d => vis.yScale(d.value))
 
-        vis.svg.select(".area-path")
-            .datum(vis.displayData[0])
+        // draw pathOne
+        vis.pathOne.datum(vis.displayData[0])
+            .transition().duration(400)
             .attr("class", "area")
             .attr("d", vis.area)
-            .attr('fill', 'steelblue')
-            .attr('opacity', .6)
+            .attr('fill', vis.colors[0])
+            .attr('opacity', .6);
 
-        vis.svg.select(".area-path-select")
-            .datum(vis.displayData[1])
+        // draw pathOne
+        vis.pathTwo.datum(vis.displayData[1])
+            .transition().duration(400)
             .attr("class", "area")
             .attr("d", vis.area)
-            .attr('fill', 'steelblue')
+            .attr('fill', vis.colors[0])
+            .attr('opacity', 1);
 
         // Call brush component here
         vis.brush
@@ -205,5 +233,14 @@ class AreaVis {
         vis.svg.select(".area-x-axis").call(vis.xAxis);
         // Update the y-axis
         vis.svg.select(".area-y-axis").call(vis.yAxis);
+    }
+
+    onFocusChange (genre){
+        let vis = this;
+
+        // Filter data depending on selected time period (brush)
+        vis.selectedGenre = genre
+
+        vis.wrangleData();
     }
 }
