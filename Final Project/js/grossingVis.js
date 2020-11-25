@@ -47,6 +47,14 @@ class GrossingVis {
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
+        vis.colors = {
+            'navy':'#010D26',
+            'blue':'#024059',
+            'paleOrange': '#D98E04',
+            'orange': '#F28705',
+            'darkOrange': '#BF4904'
+        }
+
         // Scales and axes
         vis.x = d3.scaleBand()
             .rangeRound([0, vis.width])
@@ -140,9 +148,9 @@ class GrossingVis {
             .transition(800)
             .attr("fill", d => {
                 if (d.Genres.includes("Animation")) {
-                    return "red"
+                    return vis.colors.orange
                 } else {
-                    return "blue"
+                    return vis.colors.blue
                 }
             })
             .attr("width", vis.x.bandwidth())

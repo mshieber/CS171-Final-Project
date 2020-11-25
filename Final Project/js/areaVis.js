@@ -22,7 +22,7 @@ class AreaVis {
         vis.margin = {top: 40, right: 40, bottom: 40, left: 100};
 
         vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-        vis.height = 300 - vis.margin.top - vis.margin.bottom;
+        vis.height = 280 - vis.margin.top - vis.margin.bottom;
 
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -31,7 +31,13 @@ class AreaVis {
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-        vis.colors = ['steelblue', 'IndianRed']
+        vis.colors = {
+            'navy':'#010D26',
+            'blue':'#024059',
+            'paleOrange': '#D98E04',
+            'orange': '#F28705',
+            'darkOrange': '#BF4904'
+        }
 
         // init pathGroup
         vis.pathGroup = vis.svg.append('g').attr('class','pathGroup');
@@ -61,6 +67,7 @@ class AreaVis {
             .attr("x", 0)
             .attr("y", -12)
             .attr('text-anchor', 'middle')
+            .attr('fill', vis.colors.navy)
             .text("Total Revenue");
 
         // Scales and axes
@@ -205,7 +212,7 @@ class AreaVis {
             .transition().duration(400)
             .attr("class", "area")
             .attr("d", vis.area)
-            .attr('fill', vis.colors[0])
+            .attr('fill', vis.colors.blue)
             .attr('opacity', .6);
 
         // draw pathOne
@@ -213,7 +220,7 @@ class AreaVis {
             .transition().duration(400)
             .attr("class", "area")
             .attr("d", vis.area)
-            .attr('fill', vis.colors[0])
+            .attr('fill', vis.colors.blue)
             .attr('opacity', 1);
 
         // Call brush component here

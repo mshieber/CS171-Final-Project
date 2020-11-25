@@ -30,7 +30,13 @@ class ProfitVis {
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-        vis.colors = ['steelblue', 'IndianRed']
+        vis.colors = {
+            'navy':'#010D26',
+            'blue':'#024059',
+            'paleOrange': '#D98E04',
+            'orange': '#F28705',
+            'darkOrange': '#BF4904'
+        }
 
         // Scales and axes
         vis.x = d3.scaleBand()
@@ -51,19 +57,28 @@ class ProfitVis {
 
         vis.yAxis = d3.axisLeft();
 
+        // Append axis groups
+        vis.svg.append("g")
+            .attr("class", "x-axis axis");
+        vis.svg.append("g")
+            .attr("class", "y-axis axis");
+
         // Axis title
         vis.svg.append("text")
             .attr('class', 'axis-title')
             .attr("x", 0)
             .attr("y", -12)
             .attr('text-anchor', 'middle')
+            .attr('fill', vis.colors.navy)
             .text("Avg PPM");
 
+        // Add text for when data is missing
         vis.emptyDataText = vis.svg.append('text')
             .attr('class', 'profit-empty-text')
             .attr('x', vis.width/2)
             .attr('y', vis.height/2)
             .attr('text-anchor', 'middle')
+            .attr('fill', vis.colors.darkOrange)
             .text("Sorry, we don't have data for this time range :(")
             .attr('opacity', 0)
 
@@ -219,17 +234,11 @@ class ProfitVis {
                 else{return vis.yBarsNeg(d.ppm)}
             })
             .attr('fill', d => {
-                if (d.ppm > 0) {return vis.colors[0]}
-                else {return vis.colors[1]}
+                if (d.ppm > 0) {return vis.colors.blue}
+                else {return vis.colors.orange}
             })
 
         bars.exit().remove();
-
-        vis.svg.append("g")
-            .attr("class", "x-axis axis");
-
-        vis.svg.append("g")
-            .attr("class", "y-axis axis");
 
         // Call axis function with the new domain
         vis.svg.select(".x-axis")

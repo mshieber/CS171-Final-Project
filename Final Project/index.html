@@ -18,23 +18,26 @@
 	<!-- SOME SAMPLE HTML HERE - DELETE EVERYTHING INSIDE THE BODY EXCEPT THE SCRIPTS ON THE BOTTOM TO START FROM SCRATCH -->
 	<!-- DON'T WRITE CSS IN YOUR HTML LIKE WE DID HERE - THE INLINE CSS SHOULD HELP YOU TO UNDERSTAND THE BEHAVIOR OF THE ELEMENTS BETTER -
 		 WHEN SUBMITTING, WE ALWAYS EXPECT CLEAR SEPARATION OF HTML, CSS, AND JS INTO THE PROPER FILES -->
-	<body style="padding: 5vh">
+	<body style="background-color: #F2E1C9">
 
 	<div id="fullpage">
-		<div class="section frontpage cover-image" style="background-image: url('img/Animated-films-collage.jpg');">
-			<p class="title center">front page</p>
-			<p class="subtitle center">subtitle</p>
+		<div class="section frontpage cover-image" style="background-image: url('img/animation-covers-bg3.png');">
+			<h1 class="title center">the Power of Animation</h1>
+			<div class="container" style="width: 80vw">
+				<h4 class="subtitle center">An Exploration of Animation and its historical Place in the Movie Industry</h4>
+			</div>
 		</div>
-		<div class="section">
+		<div class="section content-page">
 			<div class="row">
 				<div class="col-md-12">
-					<p> The graph below shows the breakdown of revenue/budget ratios for movies, sorted by genre. As you can see, animation is high on the list, offering a great return on budget on average. </p>
+					<div class="container" style="width:50vw">
+						<p> The graph below shows the breakdown of revenue/budget ratios for movies, sorted by genre. As you can see, animation is high on the list, offering a great return on budget on average. </p>
+					</div>
 					<div id="profitVis"></div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-9">
-					<p> This graph will let you individually explore revenue over time. </p>
 					<div id="areaVis"></div>
 				</div>
 				<div id="profitVisTooltip" class="col-md-3">
@@ -53,7 +56,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="section">
+		<div class="section content-page">
 			<div class="row">
 				<div class="col-md-10">
 					<div id="grossingVis"></div>
@@ -68,7 +71,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="section">
+		<div class="section content-page">
 			<div class="row">
 				<div class="col-md-12">
 					<p> The following will be an exploratory visualization, so you can see the interaction animation has with other genres. In the finished version, the animation chords will be emphasized, and the user will be able to hover over the sections for more details. </p>

@@ -1,8 +1,22 @@
+
+
+/* All Pages */
+.content-page{
+    padding-left: 5vh;
+    padding-right: 5vh;
+}
+
+
+/* FRONT PAGE */
 .frontpage .title {
     font-weight: bold;
+    font-size: 120px;
+    color: white;
 }
 .frontpage .subtitle {
-    padding-bottom: 50vh;
+    font-size: 60px;
+    color: white;
+    padding-bottom: 20vh;
 }
 .cover-image {
     background-position: center; /* Center the image */
@@ -11,10 +25,7 @@
 }
 
 
-.center {
-    text-align: center;
-}
-
+/* PROVIS PAGE */
 .axis line,
 .axis path {
     fill: none;
@@ -30,14 +41,15 @@
 .axis-title{
     font-family: sans-serif;
     font-size: 14px;
-    fill: #555555;
 }
 
 .profit-empty-text{
     font-size: 50px;
     font-weight: bolder;
 }
-
+#areaVis {
+    padding-top: 30px;
+}
 #profitVisTooltip {
     padding-top: 40px;
 }
@@ -45,4 +57,10 @@
 td {
     text-anchor: end;
     font-size: 12px;
+}
+
+
+/* OTHERS */
+.center {
+    text-align: center;
 }
