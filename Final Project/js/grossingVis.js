@@ -11,7 +11,6 @@
     - then the effects of the Disney Renaissance took effect with "The Little Mermaid" the following year
 - add a label for number of highest-grossing films that are animated
 - add axis labels
-- make it look good instead of bad
 
  */
 
@@ -105,8 +104,13 @@ class GrossingVis {
         // Sorting by rank
         this.displayData.sort((a, b) => a['rank_in_year']-b['rank_in_year'])
 
+        console.log("LOOK HERE BOIOIOIOIOING")
         console.log(this.displayData)
 
+        // Adding tooltip
+        vis.tooltip = d3.select("body").append('div')
+            .attr('class', "tooltip")
+            .attr('id', 'barTooltip')
 
         vis.updateVis();
     }
@@ -145,7 +149,47 @@ class GrossingVis {
             .attr("x", 0)
 
             .merge(vis.bars)
-            .transition(800)
+            // Adding tooltip
+            .on('mouseover', function(event, d){
+                d3.select(this)
+                    .attr('stroke-width', '2px')
+                    .attr('stroke', 'black')
+                    .attr('fill', d => {
+                        if (d.Genres.includes("Animation")) {
+                            return vis.colors.darkOrange
+                        } else {
+                            return vis.colors.navy
+                        }
+                    });
+                vis.tooltip
+                    .style("opacity", 1)
+                    .style("left", event.pageX + 20 + "px")
+                    .style("top", event.pageY + "px")
+                    .html(`
+                         <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+                             <h3>${d.title}</h3><br>
+                             <h4>Worldwide gross: $${d.worldwide_gross}<h4>
+                             <h4>Studio: ${d.studio}<h4>
+                             <h4>Mean IMDB rating: ${d.imdb_rating}<h4>    
+                         </div>`)
+            })
+            .on('mouseout', function(event, d){
+                d3.select(this)
+                    .attr('stroke-width', '0px')
+                    .attr("fill", d => {
+                        if (d.Genres.includes("Animation")) {
+                            return vis.colors.orange
+                        } else {
+                            return vis.colors.blue
+                        }
+                    })
+                vis.tooltip
+                    .style("opacity", 0)
+                    .style("left", 0)
+                    .style("top", 0)
+                    .html(``);
+            })
+            .transition(1000)
             .attr("fill", d => {
                 if (d.Genres.includes("Animation")) {
                     return vis.colors.orange
