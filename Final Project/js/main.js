@@ -193,8 +193,8 @@ function createVis(data, topTenData){
         profitVis.onSelectionChange(Math.round(rangeStart), Math.round(rangeEnd));
         profitVisTooltip.onFilterChange(null, Math.round(rangeStart), Math.round(rangeEnd))
     });
-    $(eventHandler).bind("focusChanged", function(event, genre){
-        areaVis.onFocusChange(genre)
+    $(eventHandler).bind("focusChanged", function(event, genre, color){
+        areaVis.onFocusChange(genre, color)
         profitVisTooltip.onFilterChange(genre)
     })
 }

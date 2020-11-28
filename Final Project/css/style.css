@@ -11,17 +11,20 @@
 .frontpage .title {
     font-weight: bold;
     font-size: 120px;
-    color: white;
+    color: #F2E1C9;
 }
 .frontpage .subtitle {
     font-size: 60px;
-    color: white;
+    color: #F2E1C9;
     padding-bottom: 20vh;
 }
 .cover-image {
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
+}
+.down-arrow {
+    transform: translate(49vw, 0);
 }
 
 

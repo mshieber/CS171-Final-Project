@@ -35,7 +35,8 @@ class ProfitVis {
             'blue':'#024059',
             'paleOrange': '#D98E04',
             'orange': '#F28705',
-            'darkOrange': '#BF4904'
+            'darkOrange': '#BF4904',
+            'purp': '#8F2051'
         }
 
         // Scales and axes
@@ -83,7 +84,9 @@ class ProfitVis {
             .attr('opacity', 0)
 
         // initialize with animation selected
-        vis.selectedBar = 'Movie'
+        vis.selectedBar = 'Animation'
+        vis.clickedBarClass = 'None'
+        vis.clickedBarColor = vis.colors.blue
 
         // (Filter, aggregate, modify data)
         vis.wrangleData();
@@ -163,6 +166,7 @@ class ProfitVis {
                 .attr('opacity', 0)
         }
 
+        console.log('FILTERED:', vis.filteredData)
         vis.x.domain(vis.filteredData.map(d => {return d.genre}))
 
         vis.yAxisScale.domain(d3.extent(vis.filteredData, d=>d.ppm))
@@ -188,11 +192,8 @@ class ProfitVis {
             .selectAll('rect')
             .data(vis.filteredData);
 
-        bars.enter()
+        let makeBars = bars.enter()
             .append('rect')
-            .attr('class', d => {
-                return d.genre + ' bar'
-            })
             .on('mouseover', function(event, d){
                 vis.selectedBar = d.genre
                 vis.svg.selectAll(".bar")
@@ -201,28 +202,56 @@ class ProfitVis {
                 d3.select(this)
                     .attr('opacity', 1)
 
-                $(vis.eventHandler).trigger("focusChanged", vis.selectedBar);
+                $(vis.eventHandler).trigger("focusChanged", [vis.selectedBar, 'blue']);
             })
             .on('mouseout', function(event, d){
-                vis.selectedBar = 'Movie'
-                vis.svg.selectAll(".bar")
-                    .attr('opacity', 1)
+                if (vis.clickedBarClass != 'None') {
+                    vis.svg.selectAll(".bar")
+                        .attr('opacity', .6)
 
-                $(vis.eventHandler).trigger("focusChanged", vis.selectedBar);
+                    console.log(vis.clickedBarClass)
+                    vis.svg.select("." + vis.clickedBarClass)
+                        .attr('opacity', 1)
+
+                    $(vis.eventHandler).trigger("focusChanged", [vis.selectedBar, 'purp']);
+                }
+                else {
+                    vis.selectedBar = 'Movie'
+
+                    vis.svg.selectAll(".bar")
+                        .attr('opacity', .6)
+
+                    $(vis.eventHandler).trigger("focusChanged", [vis.selectedBar, 'blue']);
+                }
             })
             .on('click', function(event, d){
                 vis.selectedBar = d.genre
+
+                console.log(vis.clickedBarColor)
+                console.log(d)
+
+                vis.svg.select("." + vis.clickedBarClass)
+                    .attr('fill', vis.clickedBarColor)
+
+                if (d.ppm < 0) {vis.clickedBarColor = vis.colors.orange}
+                else {vis.clickedBarColor = vis.colors.blue}
+
+                vis.clickedBarClass = d.genre.replace(/\s+/g, '-').toLowerCase()
                 vis.svg.selectAll(".bar")
                     .attr('opacity', .6)
 
                 d3.select(this)
                     .attr('opacity', 1)
+                    .attr('fill', vis.colors.purp)
 
-                $(vis.eventHandler).trigger("focusChanged", vis.selectedBar);
+                $(vis.eventHandler).trigger("focusChanged", [vis.selectedBar, 'purp']);
             })
             .merge(bars)
             .transition()
             .duration(600)
+            .attr('class', d => {
+                return d.genre.replace(/\s+/g, '-').toLowerCase() + ' bar'
+            })
             .attr('x', d => vis.x(d.genre)+barPadding/2)
             .attr('y', d => {
                 if (d.ppm>=0) {return vis.yAxisScale(0) - vis.yBarsPos(d.ppm)}
@@ -234,8 +263,16 @@ class ProfitVis {
                 else{return vis.yBarsNeg(d.ppm)}
             })
             .attr('fill', d => {
+                // Blue for positive profit
                 if (d.ppm > 0) {return vis.colors.blue}
+                //orange for negative profit
                 else {return vis.colors.orange}
+            })
+            .attr('opacity', d => {
+                if (d.genre === vis.selectedBar) {
+                    return 1
+                }
+                else {return .6}
             })
 
         bars.exit().remove();

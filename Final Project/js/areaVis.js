@@ -36,7 +36,8 @@ class AreaVis {
             'blue':'#024059',
             'paleOrange': '#D98E04',
             'orange': '#F28705',
-            'darkOrange': '#BF4904'
+            'darkOrange': '#BF4904',
+            'purp': '#8F2051'
         }
 
         // init pathGroup
@@ -91,8 +92,10 @@ class AreaVis {
             .curve(d3.curveCardinal)
             .y0(vis.height)
 
+        vis.areaColor = 'blue'
+
         // Initialize with animation selected
-        vis.selectedGenre = 'Movie'
+        vis.selectedGenre = 'Animation'
 
         // Initialize brush component
         vis.brush = d3.brushX()
@@ -220,7 +223,7 @@ class AreaVis {
             .transition().duration(400)
             .attr("class", "area")
             .attr("d", vis.area)
-            .attr('fill', vis.colors.blue)
+            .attr('fill', vis.colors[vis.areaColor])
             .attr('opacity', 1);
 
         // Call brush component here
@@ -232,6 +235,8 @@ class AreaVis {
                 vis.currentBrushRegion = vis.currentBrushRegion.map(vis.xScale.invert);
                 //console.log(vis.currentBrushRegion)
 
+                vis.pathTwo.attr('fill', vis.colors.blue)
+
                 // 3. Trigger the event 'selectionChanged' of our event handler
                 $(vis.eventHandler).trigger("selectionChanged", vis.currentBrushRegion);
             });
@@ -242,9 +247,11 @@ class AreaVis {
         vis.svg.select(".area-y-axis").call(vis.yAxis);
     }
 
-    onFocusChange (genre){
+    onFocusChange (genre, color){
         let vis = this;
 
+        // Define color of selected area (blue for hover, purple for clicked)
+        vis.areaColor = color
         // Filter data depending on selected time period (brush)
         vis.selectedGenre = genre
 
