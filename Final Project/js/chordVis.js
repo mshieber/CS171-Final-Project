@@ -69,11 +69,6 @@ class ChordVis {
             })
         })
 
-        console.log(vis.displayData)
-
-        // Going through each pair of genres, creating a display data matrix
-        console.log("SAMPLE DATA")
-        console.log(vis.sampleData)
         // Go through each pair of genres
         vis.data.forEach(item => {
             pairs(item.genres).forEach( pair => {
@@ -82,6 +77,8 @@ class ChordVis {
 
                 vis.displayData[pairFirst][pairSecond] = vis.displayData[pairFirst][pairSecond] + 1;
                 vis.displayData[pairSecond][pairFirst] = vis.displayData[pairSecond][pairFirst] + 1;
+
+                //
             })
         })
 
@@ -91,14 +88,24 @@ class ChordVis {
 
         vis.matrix = []
 
+        vis.connections = []
+
+        // Assembling everything into a final matrix
         Object.keys(vis.displayData).forEach(row => {
             let chosenRow = vis.displayData[row]
             let array = []
             Object.keys(vis.displayData).forEach(subRow => {
                 array.push(chosenRow[subRow])
+                let connectionObject = {"source" : row,
+                "target" : subRow,
+                "value" : chosenRow[subRow]}
+                vis.connections.push(connectionObject)
             })
             vis.matrix.push(array)
         })
+
+        console.log("BORAT")
+        console.log(vis.connections)
 
         console.log(vis.matrix)
 
@@ -111,6 +118,11 @@ class ChordVis {
                     res.push([arr[i], arr[j]]);
             return res;
         }
+
+        // Adding a tooltip element
+        vis.tooltip = d3.select("body").append('div')
+            .attr('class', "tooltip")
+            .attr('id', 'chordTooltip')
 
         vis.updateVis()
     }
@@ -134,11 +146,24 @@ class ChordVis {
 
         // vis.matrix = vis.displayData
 
+        vis.res = d3.chord()
+            .padAngle(0.05)
+            .sortSubgroups(d3.descending)
+            (vis.matrix)
+
+        console.log("IS THIS ANYTHING")
+        console.log(vis.res.groups)
+        console.log("HOW ABOUT THIS")
+        console.log(vis.res)
+
+        /*
         // give this matrix to d3.chord(): it will calculates all the info we need to draw arc and ribbon
         vis.res = d3.chord()
             .padAngle(0.05)
             .sortSubgroups(d3.descending)
             (vis.matrix)
+
+         */
 
         // Variable for the radius of the chord diagram
         vis.radius = (vis.height / 2) - vis.margin.top
@@ -156,16 +181,47 @@ class ChordVis {
             )
             .style("fill", "#69b3a2")
             .style("stroke", "black")
-            .style("stroke-width", .5);
+            .style("stroke-width", .5)
+            /*
+            .on("mouseover", vis.showTooltip )
+            .on("mouseleave", vis.hideTooltip )
+
+             */
+            .on('mouseover', function(event, d){
+                d3.select(this)
+                    .attr('stroke-width', '2px')
+                    .attr('stroke', 'black')
+                    .attr('fill', "black");
+                vis.tooltip
+                    .style("opacity", 1)
+                    .style("left", event.pageX + 20 + "px")
+                    .style("top", event.pageY + "px")
+                    .html(`<div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+                        <p>Genres: ${vis.genresList[d.source.index]}, ${vis.genresList[d.target.index]}</p><br>
+                        <p>Number of movies: ${vis.displayData[vis.genresList[d.source.index]][vis.genresList[d.target.index]]}</p>
+                        </div>`)
+            })
+            .on('mouseout', function(event, d){
+                d3.select(this)
+                    .attr('stroke-width', '0px')
+                    .attr("fill", "#69b3a2")
+                vis.tooltip
+                    .style("opacity", 0)
+                    .style("left", 0)
+                    .style("top", 0)
+                    .html(``);
+            })
+        ;
 
         // this group object use each group of the data.groups object
-        vis.group = vis.svg
+        vis.svg
             .datum(vis.res)
             .append("g")
             .selectAll("g")
             .data(function(d) { return d.groups; })
             .enter()
 
+        /*
         // add the group arcs on the outer part of the circle
         vis.group.append("g")
             .append("path")
@@ -175,32 +231,6 @@ class ChordVis {
                 .innerRadius(vis.radius)
                 .outerRadius(vis.radius + 5)
             )
-
-        /*
-        // Add the ticks
-        vis.group.selectAll(".group-tick")
-            .data(function(d) { return groupTicks(d, 25); })    // Controls the number of ticks: one tick each 25 here.
-            .enter()
-            .append("g")
-            .attr("transform", function(d) { return "rotate(" + (d.angle * 180 / Math.PI - 90) + ") translate(" + 200 + ",0)"; })
-            .append("line")               // By default, x1 = y1 = y2 = 0, so no need to specify it.
-            .attr("x2", 6)
-            .attr("stroke", "black")
-
-        // Add the labels of a few ticks:
-        vis.group.selectAll(".group-tick-label")
-            .data(function(d) { return groupTicks(d, 25); })
-            .enter()
-            .filter(function(d) { return d.value % 25 === 0; })
-            .append("g")
-            .attr("transform", function(d) { return "rotate(" + (d.angle * 180 / Math.PI - 90) + ") translate(" + 200 + ",0)"; })
-            .append("text")
-            .attr("x", 8)
-            .attr("dy", ".35em")
-            .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180) translate(-16)" : null; })
-            .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
-            .text(function(d) { return d.value })
-            .style("font-size", 9)
 
          */
 

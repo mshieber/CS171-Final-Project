@@ -110,7 +110,7 @@ class GrossingVis {
         // Adding tooltip
         vis.tooltip = d3.select("body").append('div')
             .attr('class', "tooltip")
-            .attr('id', 'pieTooltip')
+            .attr('id', 'barTooltip')
 
         vis.updateVis();
     }
