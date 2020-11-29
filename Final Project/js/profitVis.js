@@ -58,6 +58,18 @@ class ProfitVis {
 
         vis.yAxis = d3.axisLeft();
 
+        // Rect for selection clear
+        vis.rectClear = vis.svg.append("rect")
+            .attr("class", "clear-selection")
+            .attr("width", vis.width)
+            .attr("height", vis.height)
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("opacity", 0);
+
+        vis.barGroup = vis.svg.append("g")
+            .attr("class", "bars")
+
         // Append axis groups
         vis.svg.append("g")
             .attr("class", "x-axis axis");
@@ -85,8 +97,9 @@ class ProfitVis {
 
         // initialize with animation selected
         vis.selectedBar = 'Animation'
+        vis.clickedBar = 'Animation'
         vis.clickedBarClass = 'None'
-        vis.clickedBarColor = vis.colors.blue
+        vis.clickedBarColor = 'blue'
 
         // (Filter, aggregate, modify data)
         vis.wrangleData();
@@ -181,14 +194,26 @@ class ProfitVis {
         vis.xAxis.scale(vis.x)
         vis.yAxis.scale(vis.yAxisScale)
 
+        // Define inter-bar padding amount
         let barPadding = 6
-        let barwidth = (vis.width/vis.filteredData.length)-barPadding
 
         vis.xBarLoc
             .domain(Array.from(Array(vis.filteredData.length).keys()))
 
+        vis.rectClear
+            .on("click", function (){
+                vis.selectedBar = 'Movie'
+                vis.clickedBar = 'Movie'
+                vis.clickedBarClass = 'None'
+
+                vis.svg.selectAll(".bar")
+                    .attr('opacity', 1)
+
+                $(vis.eventHandler).trigger("focusChanged", [vis.selectedBar, 'blue']);
+            })
+
         // Bar Chart Bars
-        let bars = vis.svg
+        let bars = vis.barGroup
             .selectAll('rect')
             .data(vis.filteredData);
 
@@ -202,10 +227,14 @@ class ProfitVis {
                 d3.select(this)
                     .attr('opacity', 1)
 
-                $(vis.eventHandler).trigger("focusChanged", [vis.selectedBar, 'blue']);
+                let currColor = 'blue'
+                if (d.ppm < 0) {currColor = 'orange'}
+
+                $(vis.eventHandler).trigger("focusChanged", [vis.selectedBar, currColor]);
             })
             .on('mouseout', function(event, d){
-                if (vis.clickedBarClass != 'None') {
+                if (vis.clickedBarClass !== 'None') {
+                    vis.selectedBar = vis.clickedBar
                     vis.svg.selectAll(".bar")
                         .attr('opacity', .6)
 
@@ -213,28 +242,24 @@ class ProfitVis {
                     vis.svg.select("." + vis.clickedBarClass)
                         .attr('opacity', 1)
 
-                    $(vis.eventHandler).trigger("focusChanged", [vis.selectedBar, 'purp']);
+                    $(vis.eventHandler).trigger("focusChanged", [vis.selectedBar, vis.clickedBarColor]);
                 }
                 else {
                     vis.selectedBar = 'Movie'
 
                     vis.svg.selectAll(".bar")
-                        .attr('opacity', .6)
+                        .attr('opacity', 1)
 
                     $(vis.eventHandler).trigger("focusChanged", [vis.selectedBar, 'blue']);
                 }
             })
             .on('click', function(event, d){
-                vis.selectedBar = d.genre
+                vis.clickedBar = d.genre
 
-                console.log(vis.clickedBarColor)
-                console.log(d)
+                vis.revertColors(vis.filteredData)
 
-                vis.svg.select("." + vis.clickedBarClass)
-                    .attr('fill', vis.clickedBarColor)
-
-                if (d.ppm < 0) {vis.clickedBarColor = vis.colors.orange}
-                else {vis.clickedBarColor = vis.colors.blue}
+                if (d.ppm < 0) {vis.clickedBarColor = 'orange'}
+                else {vis.clickedBarColor = 'blue'}
 
                 vis.clickedBarClass = d.genre.replace(/\s+/g, '-').toLowerCase()
                 vis.svg.selectAll(".bar")
@@ -242,9 +267,9 @@ class ProfitVis {
 
                 d3.select(this)
                     .attr('opacity', 1)
-                    .attr('fill', vis.colors.purp)
+                    .attr('fill', vis.colors[vis.clickedBarColor])
 
-                $(vis.eventHandler).trigger("focusChanged", [vis.selectedBar, 'purp']);
+                $(vis.eventHandler).trigger("focusChanged", [vis.clickedBar, vis.clickedBarColor]);
             })
             .merge(bars)
             .transition()
@@ -257,7 +282,7 @@ class ProfitVis {
                 if (d.ppm>=0) {return vis.yAxisScale(0) - vis.yBarsPos(d.ppm)}
                 else{return vis.yAxisScale(0)}
             })
-            .attr('width', barwidth)
+            .attr('width', (vis.width/vis.filteredData.length)-barPadding)
             .attr('height', d => {
                 if (d.ppm>=0) {return vis.yBarsPos(d.ppm)}
                 else{return vis.yBarsNeg(d.ppm)}
@@ -269,7 +294,7 @@ class ProfitVis {
                 else {return vis.colors.orange}
             })
             .attr('opacity', d => {
-                if (d.genre === vis.selectedBar) {
+                if (d.genre === vis.selectedBar || vis.selectedBar === 'Movie') {
                     return 1
                 }
                 else {return .6}
@@ -318,5 +343,24 @@ class ProfitVis {
         });
 
         vis.wrangleData();
+    }
+
+    revertColors (data){
+        let vis = this;
+
+        data.forEach(d => {
+            let currBarClass = d.genre.replace(/\s+/g, '-').toLowerCase()
+            console.log(currBarClass)
+            vis.svg.select("." + currBarClass)
+                .transition().duration(600)
+                .attr('fill', function(){
+                    // Blue for positive profit
+                    if (d.ppm > 0){
+                        return vis.colors.blue
+                    }
+                    //orange for negative profit
+                    else {return vis.colors.orange}
+            })
+        })
     }
 }
