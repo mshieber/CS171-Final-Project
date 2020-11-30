@@ -21,10 +21,10 @@ class ChordVis {
         let vis = this;
 
         // Creating margins
-        vis.margin = {top: 30, right: 30, bottom: 30, left: 30};
+        vis.margin = {top: 100, right: 30, bottom: 30, left: 30};
 
         vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
-            vis.height = 500 - vis.margin.top - vis.margin.bottom;
+            vis.height = 700 - vis.margin.top - vis.margin.bottom;
 
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -179,6 +179,13 @@ class ChordVis {
             .attr("d", d3.ribbon()
                 .radius(vis.radius)
             )
+            .attr("opacity", function(d) {
+                if (d.source.index == 0) {
+                    return 1.0
+                } else {
+                    return 0.4
+                }
+            })
             .style("fill", "#69b3a2")
             .style("stroke", "black")
             .style("stroke-width", .5)
@@ -214,14 +221,13 @@ class ChordVis {
         ;
 
         // this group object use each group of the data.groups object
-        vis.svg
+        vis.group = vis.svg
             .datum(vis.res)
             .append("g")
             .selectAll("g")
             .data(function(d) { return d.groups; })
             .enter()
 
-        /*
         // add the group arcs on the outer part of the circle
         vis.group.append("g")
             .append("path")
@@ -232,15 +238,16 @@ class ChordVis {
                 .outerRadius(vis.radius + 5)
             )
 
-         */
-
-        // Returns an array of tick angles and values for a given group and step.
-        function groupTicks(d, step) {
-            var k = (d.endAngle - d.startAngle) / d.value;
-            return d3.range(0, d.value, step).map(function(value) {
-                return {value: value, angle: value * k + d.startAngle};
-            });
-        }
+        vis.group.append("text")
+            .each(d => (d.angle = (d.startAngle + d.endAngle) / 2))
+            .attr("dy", "0.35em")
+            .attr("transform", d => `
+        rotate(${(d.angle * 180 / Math.PI - 90)})
+        translate(${vis.radius + 10})
+        ${d.angle > Math.PI ? "rotate(180)" : ""}
+      `)
+            .attr("text-anchor", d => d.angle > Math.PI ? "end" : null)
+            .text(d => vis.genresList[d.index]);
 
     }
 
