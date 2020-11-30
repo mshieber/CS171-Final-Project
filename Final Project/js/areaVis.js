@@ -155,7 +155,7 @@ class AreaVis {
 
         for (let i in vis.dataSets){
             let moviesCount = d3.rollup(vis.dataSets[i],
-                leaves=> {
+                leaves => {
                     let sum = 0;
                     leaves.forEach(d => sum += d.revenue);
                     return sum;
@@ -240,6 +240,17 @@ class AreaVis {
                 // 3. Trigger the event 'selectionChanged' of our event handler
                 $(vis.eventHandler).trigger("selectionChanged", vis.currentBrushRegion);
             });
+
+        d3.select(".brush")
+            .on("click", function(event){
+
+                d3.select(".selection").attr("width", 0)
+
+                console.log('brush clicked')
+                vis.currentBrushRegion = d3.extent(vis.data, d => d.release_date.getFullYear())
+                // 3. Trigger the event 'selectionChanged' of our event handler
+                $(vis.eventHandler).trigger("selectionChanged", vis.currentBrushRegion);
+            })
 
         // Update the x-axis
         vis.svg.select(".area-x-axis").call(vis.xAxis);
