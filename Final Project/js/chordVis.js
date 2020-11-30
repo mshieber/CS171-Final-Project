@@ -82,13 +82,7 @@ class ChordVis {
             })
         })
 
-        console.log(vis.displayData)
-
-        console.log('clean up')
-
         vis.matrix = []
-
-        vis.connections = []
 
         // Assembling everything into a final matrix
         Object.keys(vis.displayData).forEach(row => {
@@ -96,18 +90,9 @@ class ChordVis {
             let array = []
             Object.keys(vis.displayData).forEach(subRow => {
                 array.push(chosenRow[subRow])
-                let connectionObject = {"source" : row,
-                "target" : subRow,
-                "value" : chosenRow[subRow]}
-                vis.connections.push(connectionObject)
             })
             vis.matrix.push(array)
         })
-
-        console.log("BORAT")
-        console.log(vis.connections)
-
-        console.log(vis.matrix)
 
         // Helper function that, given an array, returns all pairs of the array
         function pairs(arr) {
@@ -150,11 +135,6 @@ class ChordVis {
             .padAngle(0.05)
             .sortSubgroups(d3.descending)
             (vis.matrix)
-
-        console.log("IS THIS ANYTHING")
-        console.log(vis.res.groups)
-        console.log("HOW ABOUT THIS")
-        console.log(vis.res)
 
         /*
         // give this matrix to d3.chord(): it will calculates all the info we need to draw arc and ribbon
