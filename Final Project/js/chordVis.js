@@ -189,7 +189,18 @@ class ChordVis {
                     return 0.4
                 }
             })
+            .style("fill", function(d) {
+                if (vis.genresList[d.source.index] == "Animation") {
+                    return "#024059"
+                } else {
+                    return "#69b3a2"
+                }
+            })
+
+            /*
             .style("fill", "#69b3a2")
+
+             */
             .style("stroke", "black")
             .style("stroke-width", .5)
             /*
