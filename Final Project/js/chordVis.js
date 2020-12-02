@@ -61,6 +61,29 @@ class ChordVis {
 
         // **************** CREATING A MATRIX *********************
 
+        // NOTE: The following genres are the five least populous genres, and are combined into "Other"
+        // OTHER GENRES: TV Movie, Western, Documentary, War, History
+        vis.replaceList = ["TV Movie", "Western", "Documentary", "War", "History", "Music"]
+
+        // Replacing the five miscellaneous genres in genresList with "Other"
+        vis.genresList = vis.genresList.filter(function(value, index, arr){
+            return !(vis.replaceList.includes(value))
+        })
+
+        vis.genresList.push("Other")
+
+        // Helper function that returns "Other" if the genre is in the miscellaneous category, and returns the genre otherwise
+        function genreClassify(genre) {
+            if (vis.replaceList.includes(genre)) {
+                return "Other"
+            } else {
+                return genre
+            }
+        }
+
+        console.log("HERE'S SOME GENRES")
+        console.log(vis.genresList)
+
         // Initializing a matrix
         vis.genresList.forEach( item => {
             vis.displayData[item] = {}
@@ -72,8 +95,8 @@ class ChordVis {
         // Go through each pair of genres
         vis.data.forEach(item => {
             pairs(item.genres).forEach( pair => {
-                let pairFirst = pair[0].name
-                let pairSecond = pair[1].name
+                let pairFirst = genreClassify(pair[0].name)
+                let pairSecond = genreClassify(pair[1].name)
 
                 vis.displayData[pairFirst][pairSecond] = vis.displayData[pairFirst][pairSecond] + 1;
                 vis.displayData[pairSecond][pairFirst] = vis.displayData[pairSecond][pairFirst] + 1;
