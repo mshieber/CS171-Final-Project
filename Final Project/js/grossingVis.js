@@ -104,9 +104,6 @@ class GrossingVis {
         // Sorting by rank
         this.displayData.sort((a, b) => a['rank_in_year']-b['rank_in_year'])
 
-        console.log("LOOK HERE BOIOIOIOIOING")
-        console.log(this.displayData)
-
         // Adding tooltip
         vis.tooltip = d3.select("body").append('div')
             .attr('class', "tooltip")
