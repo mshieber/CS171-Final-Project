@@ -58,16 +58,50 @@
 			</div>
 		</div>
 		<div class="section content-page">
-			<div class="col-md-10">
-				<div id="circlesVis"></div>
+			<div class="container">
+				<div class="row justify-content-md-center">
+					<div class="col col-lg-3">
+						<div class="user-control">
+							<div class="form-group">
+								<label for="ageFilter">Age of Reviewer</label>
+								<select id="ageFilter" class="form-control" onchange="boxVis.filterData()">
+									<option value="allages">All ages</option>
+									<option value="0age">17 and under</option>
+									<option value="18age">18 to 29</option>
+									<option value="30age">30 to 44</option>
+									<option value="45age">45 and over</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3">
+					</div>
+					<div class="col col-lg-3">
+						<div class="user-control">
+							<div class="form-group">
+								<label for="genderFilter">Gender of Reviewer</label>
+								<select id="genderFilter" class="form-control" onchange="boxVis.filterData()">
+									<option value="allgenders">All genders</option>
+									<option value="males">Male</option>
+									<option value="females">Female</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div id="boxVis"></div>
+				</div>
 			</div>
 		</div>
 		<div class="section content-page">
 			<div class="row">
-				<div class="col-md-10">
+				<div class="col-md-9">
 					<div id="grossingVis"></div>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<form>
 						<label for="year-select">Enter a year (between 1975 and 2018 inclusive), then see the ten top-grossing movies for that year, with bars for animated movies in orange:</label>
 						<input type="number" id="year-select" name="year-select" value="1975" min="1975" max="2018">
@@ -99,6 +133,7 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 	<!-- d3 -->
 	<script src="https://d3js.org/d3.v6.min.js"></script>
@@ -111,7 +146,7 @@
 	<script src="js/profitVis.js"></script>
 	<script src="js/areaVis.js"></script>
 	<script src="js/profitVisTooltip.js"></script>
-	<script src="js/circlesVis.js"></script>
+	<script src="js/boxVis.js"></script>
 	<script src="js/grossingVis.js"></script>
 	<script src="js/chordVis.js"></script>
 	<script src="js/main.js"></script>

@@ -16,7 +16,7 @@ let dateParser = d3.timeParse("%Y-%m-%d");
 let profitVis,
     profitVisTooltip,
     areaVis,
-    circlesVis,
+    boxVis,
     grossingVis,
     chordVis;
 
@@ -187,7 +187,7 @@ function createVis(data, topTenData){
     profitVis = new ProfitVis('profitVis', data, eventHandler)
     profitVisTooltip = new ProfitVisTooltip('profitVisTooltip', data, eventHandler)
     areaVis = new AreaVis('areaVis', data, eventHandler)
-    circlesVis = new CirclesVis('circlesVis', data)
+    boxVis = new BoxVis('boxVis', data)
     grossingVis = new GrossingVis('grossingVis', topTenData)
     chordVis = new ChordVis('chordVis', data)
 

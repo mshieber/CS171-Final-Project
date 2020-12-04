@@ -24,7 +24,7 @@ class ChordVis {
         vis.margin = {top: 100, right: 30, bottom: 30, left: 30};
 
         vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
-            vis.height = 700 - vis.margin.top - vis.margin.bottom;
+            vis.height = 900 - vis.margin.top - vis.margin.bottom;
 
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -32,6 +32,21 @@ class ChordVis {
             .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
             .append("g")
             .attr("transform", "translate(" + vis.width / 2 + "," + vis.height / 2 + ")");
+
+        vis.colors = {
+            'navy': '#010D26',
+            'blue': '#024059',
+            'paleOrange': '#D98E04',
+            'orange': '#F28705',
+            'darkOrange': '#BF4904',
+            'purp': '#8F2051',
+            'tan': '#F2E1C9',
+        }
+
+        // Adding a tooltip element
+        vis.tooltip = d3.select("body").append('div')
+            .attr('class', "tooltip")
+            .attr('id', 'chordTooltip')
 
         vis.wrangleData()
     }
@@ -127,11 +142,6 @@ class ChordVis {
             return res;
         }
 
-        // Adding a tooltip element
-        vis.tooltip = d3.select("body").append('div')
-            .attr('class', "tooltip")
-            .attr('id', 'chordTooltip')
-
         vis.updateVis()
     }
 
@@ -183,7 +193,7 @@ class ChordVis {
                 .radius(vis.radius)
             )
             .attr("opacity", function(d) {
-                if (d.source.index == 0) {
+                if (vis.genresList[d.source.index] == "Animation") {
                     return 1.0
                 } else {
                     return 0.4
@@ -191,9 +201,9 @@ class ChordVis {
             })
             .style("fill", function(d) {
                 if (vis.genresList[d.source.index] == "Animation") {
-                    return "#024059"
+                    return vis.colors.orange
                 } else {
-                    return "#69b3a2"
+                    return vis.colors.blue
                 }
             })
 
@@ -201,8 +211,8 @@ class ChordVis {
             .style("fill", "#69b3a2")
 
              */
-            .style("stroke", "black")
-            .style("stroke-width", .5)
+            .style("stroke", vis.colors.navy)
+            .style("stroke-width", 0)
             /*
             .on("mouseover", vis.showTooltip )
             .on("mouseleave", vis.hideTooltip )
@@ -217,7 +227,7 @@ class ChordVis {
                     .style("opacity", 1)
                     .style("left", event.pageX + 20 + "px")
                     .style("top", event.pageY + "px")
-                    .html(`<div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+                    .html(`<div style="border: thin solid #010D26; border-radius: 5px; background: #F2E1C9; padding: 20px">
                         <p>Genres: ${vis.genresList[d.source.index]}, ${vis.genresList[d.target.index]}</p><br>
                         <p>Number of movies: ${vis.displayData[vis.genresList[d.source.index]][vis.genresList[d.target.index]]}</p>
                         </div>`)
@@ -245,8 +255,9 @@ class ChordVis {
         // add the group arcs on the outer part of the circle
         vis.group.append("g")
             .append("path")
-            .style("fill", "grey")
-            .style("stroke", "black")
+            .style("fill", vis.colors.navy)
+            .style("stroke", vis.colors.tan)
+            .style("stroke-width", "2px")
             .attr("d", d3.arc()
                 .innerRadius(vis.radius)
                 .outerRadius(vis.radius + 5)
