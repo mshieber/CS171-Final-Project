@@ -33,7 +33,15 @@
 		<div class="section story-page">
 			<div class="row">
 				<div class="col-md-7">
-					<p class="story-text centerText">notes</p>
+					<p class="story-text centerText">Animation has been a cinematic genre relatively early in the history of film, with the first animated "film" appearing in 1906.
+						This film, <i>Humorous Phases of Funny Faces</i>, is shown at right. Early animated films were of this style (flipbook-style reels of black-and-white drawings)
+						for a while—even synchronized sound and color weren't widely incorporated into animated movies until the 1920s.
+						<br><br>
+						Considering, though, the fact that animated movies are just over a century old, it's clear that
+						<b>animation has undergone a remarkable evolution.</b> As animation technology has developed from stop-motion pictures of a chalkboard to hours-long computer-animated features,
+						the cultural impact of animation has developed in turn. In particular, animated movies have become more popular and more profitable over time, establishing animation as an important
+						genre in Hollywood.
+					</p>
 				</div>
 				<div class="col-md-5">
 					<iframe width="560" height="315" src="https://www.youtube.com/embed/7M5So1WFNzo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -74,8 +82,56 @@
 
 
 		<div class="section story-page">
+			<div class="row">
+				<div class="col-md-7">
+					<p class="story-text centerText">
+						Animation has clearly been profitable in terms of budget-to-profit ratio.
+						Despite this, though, animation has only enjoyed widespread commercial success within the last few decades.
+						<br><br>
+						Animation's recent commercial success in America is in large part to the <b>Disney Renaissance</b>,
+						a period starting in the '80s when Disney produced a series of animated films (often based on well-known stories) that were critically and commercially successful.
+						In fact, nine of the ten movies of this period were nominated for Oscars, and <i>Beauty and the Beast</i> made history by becoming the first animated movie to be nominated for Best Picture.
+						In the next visualization, one can explore the top ten films in the box office by year, and see the increasing commercial success of animation over time.
+					</p>
+				</div>
+				<div class="col-md-5">
+					<img src="img/disneyrenaissance.png" width="600">
+				</div>
+			</div>
 		</div>
 
+		<div class="section content-page">
+			<div class="row">
+				<div class="col-md-9">
+					<div id="grossingVis"></div>
+				</div>
+				<div class="col-md-3">
+					<form>
+						<label for="year-select">Enter a year (between 1975 and 2018 inclusive), then see the ten top-grossing movies for that year, with bars for animated movies in orange:</label>
+						<input type="number" id="year-select" name="year-select" value="1975" min="1975" max="2018">
+						<input type="submit" id="submit-button" value="Submit" onClick="updateGross();return false">
+					</form>
+					<br><br>
+					<p> Looking at the years after 1975, one can see that animation didn't break the top ten grossing movies until "An American Tail" in 1986. Two years afterwards came "Who Framed Roger Rabbit," then the Disney Renaissance took effect the year later with "The Little Mermaid." After then, most of the top-grossing animated movies have been made by Disney and/or Pixar. </p>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="section story-page">
+			<div class="row">
+				<div class="col-md-7">
+					<p class="story-text centerText">
+						Looking at IMDB data, one can also see audience responses to animated movies.
+						Interestingly, despite the success of animated movies in the box office (indicating a large audience demand for animated movies), average IMDB ratings for animated movies are somewhere in the middle compared to other genres.
+						[NOTE I'M NOT VERY SURE WHAT TO PUT IN THIS PART AS A TRANSITION, SO FEEL FREE TO ADD IF YOU HAVE ANY IDEAS]
+					</p>
+				</div>
+				<div class="col-md-5">
+					critical reviews
+				</div>
+			</div>
+		</div>
 
 		<div class="section content-page">
 			<div class="container">
@@ -116,28 +172,35 @@
 
 
 		<div class="section story-page">
-		</div>
-
-
-		<div class="section content-page">
 			<div class="row">
-				<div class="col-md-9">
-					<div id="grossingVis"></div>
+				<div class="col-md-7">
+					<p class="story-text centerText">
+						As you can see, despite animation's success at the box office, and the leaps it's made as a genre, there is evidence of others not taking animation seriously.
+						The quotes at right are from Oscar voters, when asked about how they voted for Best Animated Feature.
+					</p>
+					<p class="story-text centerText">
+						The downplaying of animation is largely due to the conception of animation as a niche genre at best, and a genre only valuable for children at worst.
+						This, however, isn't a fair conception. While many animated movies are family-friendly, this isn't the case for all animation.
+						In fact, animated movies can interact with genres like science fiction, action, and drama.
+						Given the wide array of genres with which animation interacts, <b>it'd be more accurate to identify animation as a medium rather than a genre</b>, and not have preconceived notions of animation as "only for kids."
+					</p>
 				</div>
-				<div class="col-md-3">
-					<form>
-						<label for="year-select">Enter a year (between 1975 and 2018 inclusive), then see the ten top-grossing movies for that year, with bars for animated movies in orange:</label>
-						<input type="number" id="year-select" name="year-select" value="1975" min="1975" max="2018">
-						<input type="submit" id="submit-button" value="Submit" onClick="updateGross();return false">
-					</form>
-					<br><br>
-					<p> Looking at the years after 1975, you can see that animation didn't break the top ten grossing movies until "An American Tail" in 1986. Two years afterwards came "Who Framed Roger Rabbit," then the Disney Renaissance took effect the year later with "The Little Mermaid." After then, most of the top-grossing animated movies have been made by Disney and/or Pixar. </p>
+				<div class="col-md-5">
+					<p class="story-text centerText">
+						<i>"I never got a chance to watch those screeners. There were so many films to watch and I just had to pick and choose."</i>
+						<br>-Oscar voter, 2015
+					</p>
+					<p class="story-text centerText">
+						<i>"Frankly, I didn't see any of them."</i>
+						<br>-Oscar voter, 2014
+					</p>
+					<p class="story-text centerText">
+						<i>"I have seen none of them. I have no interest whatsoever. That ended when I was 6. My son dragged me to a few when he was 6;
+							I would seat him and go outside and make phone calls."</i>
+						<br>-Oscar voter, 2014
+					</p>
 				</div>
 			</div>
-		</div>
-
-
-		<div class="section story-page">
 		</div>
 
 
@@ -147,7 +210,7 @@
 					<div id="chordVis"></div>
 				</div>
 				<div class="col-md-3">
-					<p class="center-vert"> The Chord Visualization to the left is an exploration of how movie genres interact with each other. As you can see below, animation interacts with a variety of other genres, and therefore shouldn't be thought of as a "niche" medium. </p>
+					<p class="center-vert"> The Chord Visualization to the left is an exploration of how movie genres interact with each other. As you can see below, animation interacts with a variety of other genres, and therefore shouldn't be thought of as a "niche" medium. [NOTE: Genres listed in "Other" are TV Movie, Western, Documentary, War, and History]</p>
 				</div>
 			</div>
 		</div>
@@ -155,15 +218,31 @@
 
 		<div class="section story-page">
 			<div class="row">
-				<div class="col-md-12">
-					<p class="centerText story-text"> There will be a conclusion here. </p>
+				<div class="col-md-7">
+					<p class="centerText story-text">
+						Animation still has a ways to go in terms of broader cultural perception, but there's no denying animation has its ardent fans.
+						<br>
+						Considering the impact animation has made on the business of movies, and the emotional impact on the people who watch those movies, it's important to view animation as more than just a genre for kids.
+					</p>
+				</div>
+				<div class="col-md-5">
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/cvnyuspWMCg?start=39" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
 			</div>
 		</div>
 
 
 		<div class="section content-page credit-page">
-			<p>Add credits</p>
+			<h1>ABOUT US</h1>
+			<p>Milo Shieber is... </p>
+			<p>Paolo Pasco is a junior studying Computer Science. His favorite animated movie is <i>Spider-Man: Into the Spider-Verse</i>.</p>
+			<p>Like what you see? Check out the Github <a href="https://github.com/mshieber/CS171-Final-Project">here</a>.</p>
+			<br>
+			<h2>DATA SOURCES</h2>
+			<p>The majority of data came from LINK HERE. <br>
+				Data on the top-ten grossing movies came from <a href="https://www.kaggle.com/bidyutchanda/top-10-highest-grossing-films-19752018">this Kaggle dataset.</a> <br>
+			Excerpts from Oscar voters came from the Hollywood Reporter's "Brutally Honest Ballot" series (<a href="https://www.hollywoodreporter.com/race/oscar-voter-reveals-brutally-honest-682957">2014</a>,
+			<a href="https://www.hollywoodreporter.com/race/brutally-honest-oscar-ballot-2015-773902">2015</a>)</p>
 		</div>
 	</div>
 
