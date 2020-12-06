@@ -19,46 +19,8 @@ class ProfitVisTooltip {
     initVis() {
         let vis = this;
 
-        /*vis.margin = {top: 20, right: 5, bottom: 5, left: 5};
-
-        vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-        vis.height = 300 - vis.margin.top - vis.margin.bottom;
-
-        // SVG drawing area
-        vis.svg = d3.select("#" + vis.parentElement).append("svg")
-            .attr("width", vis.width + vis.margin.left + vis.margin.right)
-            .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
-
-        vis.colors = ['steelblue', 'IndianRed']
-
-        let titleRectHeight = 30
-        let titleRectWidth = vis.width-100
-        vis.svg.append('rect')
-            .attr('x', 0)
-            .attr('y', titleRectHeight/2)
-            .attr('width', vis.width)
-            .attr('height', vis.height-titleRectHeight/2)
-            .attr('fill', 'none')
-            .attr('stroke', vis.colors[0])
-
-        vis.svg.append('rect')
-            .attr('x', (vis.width-titleRectWidth)/2)
-            .attr('y', 0)
-            .attr('width', vis.width-100)
-            .attr('height', titleRectHeight)
-            .attr('fill', vis.colors[0])
-
-        vis.titleText = vis.svg.append('text')
-            .attr('fill', 'white')
-            .attr('text-anchor', 'middle')
-            .attr('x', vis.width/2)
-            .attr('y', titleRectHeight/2+5)
-            .text('Top Grossing Movie')*/
-
         vis.id_list = ["original_title","release_date","mean_vote"/*,"budget"*/,"ppm"/*,"revenue"*/,"homepage"];
-        vis.genre = 'Movie'
+        vis.genre = 'Animation'
 
         vis.selectionStart = d3.min(vis.data, d=>d.release_date)
         vis.selectionEnd = d3.max(vis.data, d=>d.release_date)
@@ -124,7 +86,12 @@ class ProfitVisTooltip {
             document.getElementById(Object.keys(obj)[0]).innerHTML = Object.values(obj)[0]
         })
 
-        document.getElementById('data-title').innerHTML = "Top-Grossing " + vis.genre
+        if (vis.genre == 'Movie' || vis.genre == 'TV Movie'){
+            document.getElementById('data-title').innerHTML = "Top-Grossing " + vis.genre
+        }
+        else {
+            document.getElementById('data-title').innerHTML = "Top-Grossing " + vis.genre + ' Movie'
+        }
 
         function format(id, element){
             // check if element is null

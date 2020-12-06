@@ -24,7 +24,7 @@ class ChordVis {
         vis.margin = {top: 100, right: 30, bottom: 30, left: 30};
 
         vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
-            vis.height = 900 - vis.margin.top - vis.margin.bottom;
+            vis.height = 1000 - vis.margin.top - vis.margin.bottom;
 
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")

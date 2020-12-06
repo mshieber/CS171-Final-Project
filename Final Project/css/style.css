@@ -1,11 +1,21 @@
 
 
 /* All Pages */
-.content-page{
+.content-page {
     padding-left: 5vh;
     padding-right: 5vh;
 }
 
+body {
+    font-family: vollkorn;
+    color: #010D26
+}
+
+body text,
+body p {
+    font-family: vollkorn;
+    color: #010D26
+}
 
 /* FRONT PAGE */
 .frontpage .title {
@@ -62,10 +72,38 @@ td {
     font-size: 12px;
 }
 
+/* Story Pages*/
+.story-page {
+    background-image: url('../img/navy-tan gradient.png');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.story-text {
+    color: #F2E1C9
+}
+
 
 /* OTHERS */
-.center {
+.centerText {
     text-align: center;
+}
+
+.center-vert {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.centerDiv {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
 }
 
 /* TOOLTIP */

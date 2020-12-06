@@ -17,10 +17,10 @@ class BoxVis {
     initVis() {
         let vis = this;
 
-        /*vis.margin = {top: 30, right: 20, bottom: 30, left: 100};
+        /*vis.margin = {top: 30, right: 80, bottom: 30, left: 80};
 
         vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
-            vis.height = 500 - vis.margin.top - vis.margin.bottom;
+            vis.height = 700 - vis.margin.top - vis.margin.bottom;
 
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -30,6 +30,7 @@ class BoxVis {
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");*/
 
         vis.boxPlotDiv = document.getElementById(vis.parentElement)
+        vis.boxPlotDiv.style.height = '650px'
 
         vis.colors = {
             'navy': '#010D26',
@@ -242,6 +243,10 @@ class BoxVis {
 
         d3.select('.xaxislayer-above')
             .attr('transform', 'translate(0, 5)')
+
+        d3.select('.yaxislayer-above').append('text')
+            .text('Rating')
+            .attr('transform', 'translate(35, 70)')
 
         // Bind data
         /*let arcs = vis.pieChartGroup.selectAll(".arc")

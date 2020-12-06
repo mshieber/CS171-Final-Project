@@ -130,7 +130,7 @@ class GrossingVis {
 
         vis.titleText.enter().append("text")
             .attr("class", "title-label")
-            .attr("fill", "black")
+            //.attr("fill", "black")
             .attr("x", vis.width/2)
             .merge(vis.titleText)
             .text("TOP 10 GROSSING MOVIES FOR " + document.getElementById('year-select').value.toString())
@@ -149,8 +149,8 @@ class GrossingVis {
             // Adding tooltip
             .on('mouseover', function(event, d){
                 d3.select(this)
-                    .attr('stroke-width', '2px')
-                    .attr('stroke', 'black')
+                    //.attr('stroke-width', '2px')
+                    //.attr('stroke', 'black')
                     .attr('fill', d => {
                         if (d.Genres.includes("Animation")) {
                             return vis.colors.darkOrange
@@ -172,7 +172,7 @@ class GrossingVis {
             })
             .on('mouseout', function(event, d){
                 d3.select(this)
-                    .attr('stroke-width', '0px')
+                    //.attr('stroke-width', '0px')
                     .attr("fill", d => {
                         if (d.Genres.includes("Animation")) {
                             return vis.colors.orange

@@ -22,12 +22,26 @@
 
 	<div id="fullpage">
 		<div class="section frontpage cover-image" style="background-image: url('img/animation-covers-bg3.png');">
-			<h1 class="title center">the Power of Animation</h1>
+			<h1 class="title centerText">the Power of Animation</h1>
 			<div class="container" style="width: 80vw">
-				<h4 class="subtitle center">An Exploration of Animation and its historical Place in the Movie Industry</h4>
+				<h4 class="subtitle centerText">An Exploration of Animation and its historical Place in the Movie Industry</h4>
 			</div>
 			<img src="img/noun_Arrow_fp.png" class="down-arrow" width="50" height="25"></img>
 		</div>
+
+
+		<div class="section story-page">
+			<div class="row">
+				<div class="col-md-7">
+					<p class="story-text centerText">notes</p>
+				</div>
+				<div class="col-md-5">
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/7M5So1WFNzo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+
+
 		<div class="section content-page">
 			<div class="row">
 				<div class="col-md-12">
@@ -42,7 +56,7 @@
 					<div id="areaVis"></div>
 				</div>
 				<div id="profitVisTooltip" class="col-md-3">
-					<h6 class="center" id="data-title"></h6>
+					<h6 class="centerText" id="data-title"></h6>
 					<table class="table table-striped">
 						<tr class="table-row"><td class="elem-td">Movie Title:</td><td id="original_title" class="table-data"></td></tr>
 						<tr><td class="elem-td">Mean Rating:</td><td id="mean_vote"></td></tr>
@@ -57,9 +71,18 @@
 				</div>
 			</div>
 		</div>
+
+
+		<div class="section story-page">
+		</div>
+
+
 		<div class="section content-page">
 			<div class="container">
 				<div class="row justify-content-md-center">
+					<div class="col col-lg-3">
+						<p></p>
+					</div>
 					<div class="col col-lg-3">
 						<div class="user-control">
 							<div class="form-group">
@@ -72,12 +95,6 @@
 									<option value="45age">45 and over</option>
 								</select>
 							</div>
-						</div>
-					</div>
-					<div class="col-lg-3">
-					</div>
-					<div class="col col-lg-3">
-						<div class="user-control">
 							<div class="form-group">
 								<label for="genderFilter">Gender of Reviewer</label>
 								<select id="genderFilter" class="form-control" onchange="boxVis.filterData()">
@@ -91,11 +108,17 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-11 centerDiv">
 					<div id="boxVis"></div>
 				</div>
 			</div>
 		</div>
+
+
+		<div class="section story-page">
+		</div>
+
+
 		<div class="section content-page">
 			<div class="row">
 				<div class="col-md-9">
@@ -107,24 +130,40 @@
 						<input type="number" id="year-select" name="year-select" value="1975" min="1975" max="2018">
 						<input type="submit" id="submit-button" value="Submit" onClick="updateGross();return false">
 					</form>
+					<br><br>
 					<p> Looking at the years after 1975, you can see that animation didn't break the top ten grossing movies until "An American Tail" in 1986. Two years afterwards came "Who Framed Roger Rabbit," then the Disney Renaissance took effect the year later with "The Little Mermaid." After then, most of the top-grossing animated movies have been made by Disney and/or Pixar. </p>
 				</div>
 			</div>
 		</div>
+
+
+		<div class="section story-page">
+		</div>
+
+
 		<div class="section content-page">
 			<div class="row">
-				<div class="col-md-12">
-					<p> The following is an exploration of how movie genres interact with each other. As you can see below, animation interacts with a variety of other genres, and therefore shouldn't be thought of as a "niche" medium. </p>
+				<div class="col-md-8">
 					<div id="chordVis"></div>
+				</div>
+				<div class="col-md-3">
+					<p class="center-vert"> The Chord Visualization to the left is an exploration of how movie genres interact with each other. As you can see below, animation interacts with a variety of other genres, and therefore shouldn't be thought of as a "niche" medium. </p>
 				</div>
 			</div>
 		</div>
-		<div class="section">
+
+
+		<div class="section story-page">
 			<div class="row">
 				<div class="col-md-12">
-					<p class="center"> There will be a conclusion here. </p>
+					<p class="centerText story-text"> There will be a conclusion here. </p>
 				</div>
 			</div>
+		</div>
+
+
+		<div class="section content-page credit-page">
+			<p>Add credits</p>
 		</div>
 	</div>
 
