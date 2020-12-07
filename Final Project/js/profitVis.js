@@ -12,7 +12,7 @@ class ProfitVis {
 
 
     /*
-     * Initialize visualization (static content, e.g. SVG area or axes)
+     * Initialize visualization
      */
 
     initVis() {
@@ -39,10 +39,11 @@ class ProfitVis {
             'purp': '#8F2051'
         }
 
-        // Scales and axes
+        /*
+         Scales and axes
+         */
         vis.x = d3.scaleBand()
             .range([0, vis.width]);
-        //.paddingInner(0.2);
 
         vis.xBarLoc = d3.scaleLinear()
             .range([0, vis.width]);
@@ -67,6 +68,7 @@ class ProfitVis {
             .attr("y", 0)
             .attr("opacity", 0);
 
+        // group for bar chart bars
         vis.barGroup = vis.svg.append("g")
             .attr("class", "bars")
 
@@ -112,6 +114,7 @@ class ProfitVis {
         vis.genreCount = {}
         vis.genresList = []
 
+        // find profit for each movie
         vis.filteredData.forEach((d) => {
             let profit = d.revenue - d.budget
 
@@ -140,13 +143,12 @@ class ProfitVis {
 
         vis.adjProfit = []
 
+        // make object of profits and genres
         for (var k in vis.genreProfits) {
-            // check if the property/key is defined in the object itself, not in parent
             let genreDict = {
                 'genre':  k,
                 'ppm': vis.genreProfits[k]/vis.genreCount[k]
             };
-            //genreDict[k] = vis.genreProfits[k]/vis.genreCount[k]
             vis.adjProfit.push(genreDict)
         }
 
@@ -160,6 +162,7 @@ class ProfitVis {
     updateVis(){
         let vis = this;
 
+        // check if data is empty
         if (vis.filteredData.length < 1) {
             vis.svg.select(".x-axis")
                 .attr('opacity', 0)
@@ -179,11 +182,13 @@ class ProfitVis {
                 .attr('opacity', 0)
         }
 
-        console.log('FILTERED:', vis.filteredData)
+        // x axis scale
         vis.x.domain(vis.filteredData.map(d => {return d.genre}))
 
+        // scale for x axis placement
         vis.yAxisScale.domain(d3.extent(vis.filteredData, d=>d.ppm))
 
+        // Scales for pos and neg bars
         vis.yBarsPos
             .range([0, vis.yAxisScale(0)])
             .domain([0, d3.max(vis.filteredData, d => d.ppm)])
@@ -191,6 +196,7 @@ class ProfitVis {
             .range([0, vis.height - vis.yAxisScale(0)])
             .domain([0, d3.min(vis.filteredData, d => d.ppm)])
 
+        // scale axes
         vis.xAxis.scale(vis.x)
         vis.yAxis.scale(vis.yAxisScale)
 
@@ -200,6 +206,7 @@ class ProfitVis {
         vis.xBarLoc
             .domain(Array.from(Array(vis.filteredData.length).keys()))
 
+        // reset chart when back clicked
         vis.rectClear
             .on("click", function (){
                 vis.selectedBar = 'Movie'
@@ -217,7 +224,7 @@ class ProfitVis {
             .selectAll('rect')
             .data(vis.filteredData);
 
-        let makeBars = bars.enter()
+        bars.enter()
             .append('rect')
             .on('mouseover', function(event, d){
                 vis.selectedBar = d.genre

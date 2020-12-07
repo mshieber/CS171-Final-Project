@@ -191,10 +191,13 @@ function createVis(data, topTenData){
     grossingVis = new GrossingVis('grossingVis', topTenData)
     chordVis = new ChordVis('chordVis', data)
 
+    // run on brush use
     $(eventHandler).bind("selectionChanged", function(event, rangeStart, rangeEnd){
         profitVis.onSelectionChange(Math.round(rangeStart), Math.round(rangeEnd));
         profitVisTooltip.onFilterChange(null, Math.round(rangeStart), Math.round(rangeEnd))
     });
+
+    // run on bar interaction
     $(eventHandler).bind("focusChanged", function(event, genre, color){
         areaVis.onFocusChange(genre, color)
         profitVisTooltip.onFilterChange(genre)

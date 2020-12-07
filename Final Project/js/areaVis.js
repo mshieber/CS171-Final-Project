@@ -71,7 +71,9 @@ class AreaVis {
             .attr('fill', vis.colors.navy)
             .text("Total Revenue");
 
-        // Scales and axes
+        /*
+         Scales and axes
+         */
         vis.xScale = d3.scaleLinear()
             .range([0, vis.width])
 
