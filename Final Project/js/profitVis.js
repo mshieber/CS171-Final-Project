@@ -83,7 +83,7 @@ class ProfitVis {
             .attr("y", -12)
             .attr('text-anchor', 'middle')
             .attr('fill', vis.colors.navy)
-            .text("Avg PPM");
+            .text("Avg. Profit");
 
         // Add text for when data is missing
         vis.emptyDataText = vis.svg.append('text')
@@ -98,7 +98,7 @@ class ProfitVis {
         // initialize with animation selected
         vis.selectedBar = 'Animation'
         vis.clickedBar = 'Animation'
-        vis.clickedBarClass = 'None'
+        vis.clickedBarClass = 'animation'
         vis.clickedBarColor = 'blue'
 
         // (Filter, aggregate, modify data)

@@ -227,7 +227,7 @@ class ChordVis {
                     .style("opacity", 1)
                     .style("left", event.pageX + 20 + "px")
                     .style("top", event.pageY + "px")
-                    .html(`<div style="border: thin solid #010D26; border-radius: 5px; background: #F2E1C9; padding: 20px">
+                    .html(`<div>
                         <p>Genres: ${vis.genresList[d.source.index]}, ${vis.genresList[d.target.index]}</p><br>
                         <p>Number of movies: ${vis.displayData[vis.genresList[d.source.index]][vis.genresList[d.target.index]]}</p>
                         </div>`)

@@ -76,6 +76,11 @@ class GrossingVis {
         vis.svg.append("g")
             .attr("class", "y-axis axis");
 
+        // Adding tooltip
+        vis.tooltip = d3.select("body").append('div')
+            .attr('class', "tooltip")
+            .attr('id', 'barTooltip')
+
         // (Filter, aggregate, modify data)
         vis.wrangleData();
     }
@@ -103,11 +108,6 @@ class GrossingVis {
 
         // Sorting by rank
         this.displayData.sort((a, b) => a['rank_in_year']-b['rank_in_year'])
-
-        // Adding tooltip
-        vis.tooltip = d3.select("body").append('div')
-            .attr('class', "tooltip")
-            .attr('id', 'barTooltip')
 
         vis.updateVis();
     }
@@ -163,9 +163,9 @@ class GrossingVis {
                     .style("left", event.pageX + 20 + "px")
                     .style("top", event.pageY + "px")
                     .html(`
-                         <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+                         <div>
                              <h3>${d.title}</h3><br>
-                             <h4>Worldwide gross: $${d.worldwide_gross}<h4>
+                             <h4>Worldwide gross: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(d.worldwide_gross)}<h4>
                              <h4>Studio: ${d.studio}<h4>
                              <h4>Mean IMDB rating: ${d.imdb_rating}<h4>    
                          </div>`)

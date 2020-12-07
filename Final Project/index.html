@@ -22,9 +22,9 @@
 
 	<div id="fullpage">
 		<div class="section frontpage cover-image" style="background-image: url('img/animation-covers-bg3.png');">
-			<h1 class="title centerText">the Power of Animation</h1>
+			<h1 class="title center-text">the Power of Animation</h1>
 			<div class="container" style="width: 80vw">
-				<h4 class="subtitle centerText">An Exploration of Animation and its historical Place in the Movie Industry</h4>
+				<h4 class="subtitle center-text">An Exploration of Animation and its historical Place in the Movie Industry</h4>
 			</div>
 			<img src="img/noun_Arrow_fp.png" class="down-arrow" width="50" height="25"></img>
 		</div>
@@ -32,8 +32,8 @@
 
 		<div class="section story-page">
 			<div class="row">
-				<div class="col-md-7">
-					<p class="story-text centerText">Animation has been a cinematic genre relatively early in the history of film, with the first animated "film" appearing in 1906.
+				<div class="col-md">
+					<p class="story-text justify-text">Animation has been a cinematic genre relatively early in the history of film, with the first animated "film" appearing in 1906.
 						This film, <i>Humorous Phases of Funny Faces</i>, is shown at right. Early animated films were of this style (flipbook-style reels of black-and-white drawings)
 						for a while—even synchronized sound and color weren't widely incorporated into animated movies until the 1920s.
 						<br><br>
@@ -44,7 +44,7 @@
 					</p>
 				</div>
 				<div class="col-md-5">
-					<iframe width="560" height="315" src="https://www.youtube.com/embed/7M5So1WFNzo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<iframe class="center-vert" width="560" height="315" src="https://www.youtube.com/embed/7M5So1WFNzo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
 			</div>
 		</div>
@@ -53,8 +53,9 @@
 		<div class="section content-page">
 			<div class="row">
 				<div class="col-md-12">
-					<div class="container" style="width:30vw">
-						<p> The graph below shows the breakdown of revenue/budget ratios for movies, sorted by genre. As you can see, animation is high on the list, offering a great return on budget on average. </p>
+					<div class="container" style="width:50vw; padding-top:50px">
+						<p class="justify-text"> The bar chart below shows the average movie profit by genre. Click on a bar to highlight the genres total revenue over time in the area chart. Click anywhere outside the bars to deselect the genre.
+							Click and drag on the area chart to isolate a time range. Click again inside the brush to clear the time range. As you can see, animation is high on the list, offering a great return on budget on average. </p>
 					</div>
 					<div id="profitVis"></div>
 				</div>
@@ -64,7 +65,7 @@
 					<div id="areaVis"></div>
 				</div>
 				<div id="profitVisTooltip" class="col-md-3">
-					<h6 class="centerText" id="data-title"></h6>
+					<h6 class="justify-text" id="data-title"></h6>
 					<table class="table table-striped">
 						<tr class="table-row"><td class="elem-td">Movie Title:</td><td id="original_title" class="table-data"></td></tr>
 						<tr><td class="elem-td">Mean Rating:</td><td id="mean_vote"></td></tr>
@@ -83,8 +84,8 @@
 
 		<div class="section story-page">
 			<div class="row">
-				<div class="col-md-7">
-					<p class="story-text centerText">
+				<div class="col-md">
+					<p class="story-text justify-text">
 						Animation has clearly been profitable in terms of budget-to-profit ratio.
 						Despite this, though, animation has only enjoyed widespread commercial success within the last few decades.
 						<br><br>
@@ -107,12 +108,13 @@
 				</div>
 				<div class="col-md-3">
 					<form>
-						<label for="year-select">Enter a year (between 1975 and 2018 inclusive), then see the ten top-grossing movies for that year, with bars for animated movies in orange:</label>
+						<label for="year-select" class="justify-text">Enter a year (between 1975 and 2018 inclusive), then see the ten top-grossing movies for that year, with bars for animated movies in orange:</label>
 						<input type="number" id="year-select" name="year-select" value="1975" min="1975" max="2018">
 						<input type="submit" id="submit-button" value="Submit" onClick="updateGross();return false">
 					</form>
 					<br><br>
-					<p> Looking at the years after 1975, one can see that animation didn't break the top ten grossing movies until "An American Tail" in 1986. Two years afterwards came "Who Framed Roger Rabbit," then the Disney Renaissance took effect the year later with "The Little Mermaid." After then, most of the top-grossing animated movies have been made by Disney and/or Pixar. </p>
+					<p class="justify-text"> Looking at the years after 1975, one can see that animation didn't break the top ten grossing movies until "An American Tail" in 1986. Two years afterwards came "Who Framed Roger Rabbit,"
+						then the Disney Renaissance took effect the succeeding year with "The Little Mermaid." Since then, most of the top-grossing animated movies have been made by Disney and/or Pixar. </p>
 				</div>
 			</div>
 		</div>
@@ -120,15 +122,16 @@
 
 		<div class="section story-page">
 			<div class="row">
-				<div class="col-md-7">
-					<p class="story-text centerText">
+				<div class="col-md-6" style="padding-left: 100px">
+					<p class="story-text justify-text center-vert">
 						Looking at IMDB data, one can also see audience responses to animated movies.
 						Interestingly, despite the success of animated movies in the box office (indicating a large audience demand for animated movies), average IMDB ratings for animated movies are somewhere in the middle compared to other genres.
-						[NOTE I'M NOT VERY SURE WHAT TO PUT IN THIS PART AS A TRANSITION, SO FEEL FREE TO ADD IF YOU HAVE ANY IDEAS]
+						According to IMDB, the highest rated animated film is Spirited Away directed by the reputed Hayao Miyazaki.
 					</p>
 				</div>
-				<div class="col-md-5">
-					critical reviews
+				<div class="col-md-2"></div>
+				<div class="col-md-4">
+					<img src="img/spirited away cover.jpg" height="500px">
 				</div>
 			</div>
 		</div>
@@ -136,9 +139,6 @@
 		<div class="section content-page">
 			<div class="container">
 				<div class="row justify-content-md-center">
-					<div class="col col-lg-3">
-						<p></p>
-					</div>
 					<div class="col col-lg-3">
 						<div class="user-control">
 							<div class="form-group">
@@ -151,6 +151,11 @@
 									<option value="45age">45 and over</option>
 								</select>
 							</div>
+						</div>
+					</div>
+					<div class="col col-md-1"></div>
+					<div class="col col-lg-3">
+						<div class="user-control">
 							<div class="form-group">
 								<label for="genderFilter">Gender of Reviewer</label>
 								<select id="genderFilter" class="form-control" onchange="boxVis.filterData()">
@@ -173,28 +178,28 @@
 
 		<div class="section story-page">
 			<div class="row">
-				<div class="col-md-7">
-					<p class="story-text centerText">
+				<div class="col-md">
+					<p class="story-text justify-text">
 						As you can see, despite animation's success at the box office, and the leaps it's made as a genre, there is evidence of others not taking animation seriously.
 						The quotes at right are from Oscar voters, when asked about how they voted for Best Animated Feature.
 					</p>
-					<p class="story-text centerText">
+					<p class="story-text justify-text">
 						The downplaying of animation is largely due to the conception of animation as a niche genre at best, and a genre only valuable for children at worst.
 						This, however, isn't a fair conception. While many animated movies are family-friendly, this isn't the case for all animation.
 						In fact, animated movies can interact with genres like science fiction, action, and drama.
 						Given the wide array of genres with which animation interacts, <b>it'd be more accurate to identify animation as a medium rather than a genre</b>, and not have preconceived notions of animation as "only for kids."
 					</p>
 				</div>
-				<div class="col-md-5">
-					<p class="story-text centerText">
+				<div class="col-md">
+					<p class="story-text center-text">
 						<i>"I never got a chance to watch those screeners. There were so many films to watch and I just had to pick and choose."</i>
 						<br>-Oscar voter, 2015
 					</p>
-					<p class="story-text centerText">
+					<p class="story-text center-text">
 						<i>"Frankly, I didn't see any of them."</i>
 						<br>-Oscar voter, 2014
 					</p>
-					<p class="story-text centerText">
+					<p class="story-text center-text">
 						<i>"I have seen none of them. I have no interest whatsoever. That ended when I was 6. My son dragged me to a few when he was 6;
 							I would seat him and go outside and make phone calls."</i>
 						<br>-Oscar voter, 2014
@@ -218,15 +223,18 @@
 
 		<div class="section story-page">
 			<div class="row">
-				<div class="col-md-7">
-					<p class="centerText story-text">
+				<div class="col-md-4">
+					<p class="justify-text center-vert story-text">
 						Animation still has a ways to go in terms of broader cultural perception, but there's no denying animation has its ardent fans.
-						<br>
+						<br><br>
 						Considering the impact animation has made on the business of movies, and the emotional impact on the people who watch those movies, it's important to view animation as more than just a genre for kids.
 					</p>
 				</div>
-				<div class="col-md-5">
-					<iframe width="560" height="315" src="https://www.youtube.com/embed/_I-AfCc1Vxk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<div class="col-md-auto"></div>
+				<div class="col-md-7">
+					<div style="padding-left: 100px">
+						<iframe width="840" height="472" src="https://www.youtube.com/embed/_I-AfCc1Vxk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -234,14 +242,15 @@
 
 		<div class="section content-page credit-page">
 			<h1>ABOUT US</h1>
-			<p>Milo Shieber is... </p>
-			<p>Paolo Pasco is a junior studying Computer Science. His favorite animated movie is <i>Spider-Man: Into the Spider-Verse</i>, and that one scene in <i>Tangled</i> with the lanterns.</p>
+			<p><strong>Milo Shieber</strong> is a senior studying Computer Science and Psychology at Harvard College. His favorite animated movie is <i>the Jungle Book (1967)</i></p>
+			<p><strong>Paolo Pasco</strong> is a junior studying Computer Science at Harvard College. His favorite animated movie is <i>Spider-Man: Into the Spider-Verse</i>, and that one scene in <i>Tangled</i> with the lanterns.</p>
 			<p>Like what you see? Check out the Github <a href="https://github.com/mshieber/CS171-Final-Project">here</a>.</p>
-			<br>
+			<br><br>
 			<h2>DATA SOURCES</h2>
-			<p>The majority of data came from LINK HERE. <br>
-				Data on the top-ten grossing movies came from <a href="https://www.kaggle.com/bidyutchanda/top-10-highest-grossing-films-19752018">this Kaggle dataset.</a> <br>
-			Excerpts from Oscar voters came from the Hollywood Reporter's "Brutally Honest Ballot" series (<a href="https://www.hollywoodreporter.com/race/oscar-voter-reveals-brutally-honest-682957">2014</a>,
+			<p>Movie metadata came from <a href="https://www.kaggle.com/rounakbanik/the-movies-dataset?select=movies_metadata.csv">here</a>
+				while IMDB data came from <a href="https://www.kaggle.com/stefanoleone992/imdb-extensive-dataset?select=IMDb+ratings.csv">here</a>.</p>
+			<p>Data on the top-ten grossing movies came from <a href="https://www.kaggle.com/bidyutchanda/top-10-highest-grossing-films-19752018">this Kaggle dataset.</a></p>
+			<p>Excerpts from Oscar voters came from the Hollywood Reporter's "Brutally Honest Ballot" series (<a href="https://www.hollywoodreporter.com/race/oscar-voter-reveals-brutally-honest-682957">2014</a>,
 			<a href="https://www.hollywoodreporter.com/race/brutally-honest-oscar-ballot-2015-773902">2015</a>)</p>
 		</div>
 	</div>

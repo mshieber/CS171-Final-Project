@@ -8,13 +8,17 @@
 
 body {
     font-family: vollkorn;
-    color: #010D26
+    color: #010D26;
+    column-fill: auto
 }
 
 body text,
 body p {
     font-family: vollkorn;
     color: #010D26
+}
+a {
+    color: #BF4904;
 }
 
 /* FRONT PAGE */
@@ -47,12 +51,10 @@ body p {
 }
 
 .x-axis .tick{
-    font-family: sans-serif;
     font-size: 11px;
     fill: #555;
 }
 .axis-title{
-    font-family: sans-serif;
     font-size: 14px;
 }
 
@@ -78,17 +80,24 @@ td {
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 60px;
+}
+
+.col-md{
+    padding: 100px
 }
 
 .story-text {
-    color: #F2E1C9
+    color: #F2E1C9;
 }
 
 
 /* OTHERS */
-.centerText {
+.justify-text {
+    text-align: justify;
+}
+
+.center-text {
     text-align: center;
 }
 
@@ -102,7 +111,6 @@ td {
 
 .centerDiv {
     margin: auto;
-    width: 50%;
     padding: 10px;
 }
 
@@ -111,6 +119,10 @@ td {
     position: absolute;
     text-align: center;
     font: 12px sans-serif;
+    border: thin solid #010D26;
+    border-radius: 5px;
+    background: #F2E1C9;
+    padding: 20px
     /*  pointer-events: none;	This line needs to be removed */
 }
 .tooltip h3,h4 {
