@@ -23,7 +23,7 @@ let profitVis,
 // load and manage IMDB data
 Promise.all([
     // import IMDB Data
-    d3.csv("data/IMDb_ratings.csv", (row) => {
+    d3.csv("docs/data/IMDb_ratings.csv", (row) => {
         // strings -> ints
         Object.keys(row).forEach(function(key) {
             if (key != 'imdb_title_id') { row[key] = +row[key]}
@@ -31,7 +31,7 @@ Promise.all([
         return row
     }),
     // import movie metadata
-    d3.csv("data/movies_metadata.csv", (row) => {
+    d3.csv("docs/data/movies_metadata.csv", (row) => {
 
         // strings -> ints
         let colsToInt = ['budget', 'id', 'popularity', 'revenue', 'runtime', 'vote_average', 'vote_count']
@@ -135,7 +135,7 @@ Promise.all([
         return row
     }),
     // import top ten grossing metadata
-    d3.csv("data/toptengrossing.csv", (row) => {
+    d3.csv("docs/data/toptengrossing.csv", (row) => {
 
         // Dealing with worldwide_gross, which has a dollar sign appended
         row['worldwide_gross'] = row['worldwide_gross']
