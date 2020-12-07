@@ -23,7 +23,7 @@ let profitVis,
 // load and manage IMDB data
 Promise.all([
     // import IMDB Data
-    d3.csv("data/IMDB ratings.csv", (row) => {
+    d3.csv("data/IMDB_ratings.csv", (row) => {
         // strings -> ints
         Object.keys(row).forEach(function(key) {
             if (key != 'imdb_title_id') { row[key] = +row[key]}
