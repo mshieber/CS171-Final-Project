@@ -91,6 +91,10 @@ td {
     color: #F2E1C9;
 }
 
+.story-page .row {
+    padding: 50px
+}
+
 
 /* OTHERS */
 .justify-text {
